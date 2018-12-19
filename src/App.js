@@ -3,18 +3,41 @@ import './App.css';
 import Square from './Square/Square'
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      board: Array(18).fill(Array(10).fill('e')),
+  state = {
+      // board: Array(18).fill(Array(10).fill('e')), DOESN'T WORK
+      board: [
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+    ],
       currentPiece: [],
       currentPieceName: null,
       currentColor: null,
       gameBegun: false,
-      stopped: true,
+      stopped: false,
     }
-  }
+    magicFunction = () =>{
+      let boardCopy = this.state.board.slice()
+      boardCopy[0][0] = 'y'
+      this.setState({
+        board: boardCopy
+      }, ()=>console.log(this.state.board))
+    }
 
   makeRow = (num) =>{
 		return(
@@ -46,57 +69,62 @@ class App extends Component {
 
     start = () => {
       window.addEventListener('keypress', this.keyRouter)
-      // console.log('start')
       if (this.state.stopped) {
         this.setState({ stopped: false })
-        // gravity();
-        if (!this.state.gameBegun) {
-          // getRandomPiece();
-        }
+        this.gravity();
       }
+        if (!this.state.gameBegun) {
+          this.setState({gameBegun : true})
+          this.getRandomPiece();
+        }
     }
+
     stop = () => {
       window.removeEventListener('keypress', this.keyRouter)
       // console.log('stop')
       this.setState({ stopped: true })
-      // clearTimeout(gravityTimeout);
+      this.controlGravity('stop')
     }
 
     getRandomPiece = () => {
       console.log('get random piece')
-      const min = 0;
-      const max = 7;
+      // const min = 0;
+      // const max = 7;
       // const random = Math.floor(Math.random() * (max - min)) + min;
 
       const pieceArray = ['O', 'I', 'S', 'Z', 'L', 'J', 'T']
-      if (!this.state.stopped) {
         // this.generatePiece(pieceArray[random])
         this.generatePiece(pieceArray[0])
 
-      }
     };
 
     generatePiece = (shapeName) => {
-      // console.log('generatePiece')
+      console.log('generate Piece')
+      
       this.setState({
         currentPieceName: shapeName,
-        gameBegun: true
-      })
+        gameBegun: true,
+        currentColor: 'y',
+      }, ()=>console.log(this.state))
+      
       // clearMs();
       // checkForFullRows();
       // checkForGameOver();
+      
       let boardCopy = this.state.board.slice()
       if (shapeName === 'O') {
-        boardCopy[0][4] = 'ym';
-        boardCopy[0][5] = 'ym';
-        boardCopy[1][4] = 'ym';
-        boardCopy[1][5] = 'ym';
+        boardCopy[0][4] = 'y';
+        boardCopy[0][5] = 'y';
+        boardCopy[1][4] = 'y';
+        boardCopy[1][5] = 'y';
+        
         this.setState({
           board: boardCopy,
-          currentColor: 'y',
           currentPiece: [[0, 4], [0, 5], [1, 4], [1, 5]]
-        })
+        }, ()=>this.controlGravity('start'))
       }
+    }
+
       // else if (shapeName === 'I') {
       //     currentColor = 'b'
       //     board[0][3] = 'bm'
@@ -148,45 +176,61 @@ class App extends Component {
       //     board[1][4] = 'vm'
       //     currentPiece = [[0, 3], [0, 4], [0, 5], [1, 4]]
       // }
-    };
+    // };
 
-    // const gravity = () => {
-    //   // i.e., is the current piece allowed to descend, or is something in the way
-    //   let allowed = true;
-    //   console.log('gravity')
-    //   if (logging) {
-    //       console.log(board)
-    //   }
+    gravity = () => {
+      console.log('gravity')
+      // i.e., is the current piece allowed to descend, or is something in the way
+      let allowed = true;
 
-    //   if (checkForFloor() || checkForBlocksBeneath()) {
-    //       getRandomPiece();
-    //       allowed = false;
-    //   }
+      // if (checkForFloor() || checkForBlocksBeneath()) {
+      //     getRandomPiece();
+      //     allowed = false;
+      // }
 
-    //   if (allowed) {
-    //       //mark all the spaces corresponding to the current piece to empty
-    //       for (let i = 0; i < currentPiece.length; i++) {
-    //           board[currentPiece[i][0]][currentPiece[i][1]] = 'e'
-    //       }
-    //       //change all the spaces below current piece to the values of current piece
-    //       for (let i = 0; i < currentPiece.length; i++) {
-    //           if (currentPiece[i][0] + 1 < 18) {
-    //               board[currentPiece[i][0] + 1][currentPiece[i][1]] = currentColor + 'm';
-    //           }
-    //       }
-    //       //update the state of current piece
-    //       for (let i = 0; i < currentPiece.length; i++) {
-    //           currentPiece[i][0] = currentPiece[i][0] + 1
-    //       }
-    //   }
-    //   drawBoard();
-    //   if (!stopped){
-    //       gravityTimeout = setTimeout(gravity, 1000);
-    //   }
-    // }
+      if (allowed) {
+        let boardCopy = this.state.board.slice();
+        let currentPieceCopy = this.state.currentPiece.slice();
+          //mark all the spaces corresponding to the current piece to empty
+          for (let i = 0; i < currentPieceCopy.length; i++) {
+              boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = 'e'
+          }
+          //change all the spaces below current piece to the values of current piece
+          for (let i = 0; i < currentPieceCopy.length; i++) {
+              if (currentPieceCopy[i][0] + 1 < 18) {
+                  boardCopy[currentPieceCopy[i][0] + 1][currentPieceCopy[i][1]] = this.state.currentColor 
+                  // + 'm';
+              }
+          }
+          //update the state of current piece
+          for (let i = 0; i < currentPieceCopy.length; i++) {
+              currentPieceCopy[i][0] = currentPieceCopy[i][0] + 1
+          }
+          this.setState({
+            board : boardCopy,
+            currentPiece : currentPieceCopy  
+          })
+      }
+      // drawBoard();
+      if (!this.state.stopped){
+        this.controlGravity('start')
+      }
+    }
+
+    controlGravity(command){
+      let gravityTimeout;
+      switch(command){
+        case "start" : gravityTimeout = setTimeout(this.gravity, 1000); break;
+        case "stop" : clearTimeout(gravityTimeout);
+        break;
+        default : console.log('ERR: called control gravity without command')
+      }
+    }
+  
 
     
     render() {
+
       return (
         <div id="content">
           <div id="innerDiv">
@@ -195,7 +239,7 @@ class App extends Component {
             <p>Control pieces with W, A, S and D.</p>
             <p>Regretably, pieces do not yet rotate.</p>
             <button onClick={this.start}>Start</button>
-            <button onClick={this.stop}>Stop</button>
+            <button onClick={this.magicFunction}>Render block thing</button>
             <table>
               <tbody>
                 {this.makeRow(0)}
