@@ -5,479 +5,534 @@ import GameOver from './GameOver/GameOver';
 
 class App extends Component {
   state = {
-      // board: Array(18).fill(Array(10).fill('e')), DOESN'T WORK
-      board: [
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+    // board: Array(18).fill(Array(10).fill('e')), DOESN'T WORK
+    board: [
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
     ],
-      currentPiece: [],
-      currentPieceName: null,
-      currentColor: null,
-      gameBegun: false,
-      stopped: true,
-      gameOver: false,
-      score: 0,
-      rotation: 1
-    }
+    currentPiece: [],
+    currentPieceName: null,
+    currentColor: null,
+    gameBegun: false,
+    stopped: true,
+    gameOver: false,
+    score: 0,
+    rotation: 1
+  }
 
   logBoard = () => {
     console.log(this.state.board)
   }
 
-  makeRow = (num) =>{
-		return(
-			<tr>
-				<Square colorKey={this.state.board[num][0]}/>
-				<Square colorKey={this.state.board[num][1]}/>	
-				<Square colorKey={this.state.board[num][2]}/>
-        <Square colorKey={this.state.board[num][3]}/>
-				<Square colorKey={this.state.board[num][4]}/>	
-				<Square colorKey={this.state.board[num][5]}/>
-        <Square colorKey={this.state.board[num][6]}/>
-				<Square colorKey={this.state.board[num][7]}/>	
-				<Square colorKey={this.state.board[num][8]}/>
-        <Square colorKey={this.state.board[num][9]}/>
-			</tr>
-				)		
-	}
-    keyRouter = (e) => {
-      if (e.key === 'a') {
-        this.moveLeft();
-      } else if (e.key === 'd') {
-        this.moveRight();
-      } else if (e.key === 's') {
-        this.moveDown();
-      } else if (e.key === 'w') {
-        this.rotate(this.state.rotation);
-      }
+  makeRow = (num) => {
+    return (
+      <tr>
+        <Square colorKey={this.state.board[num][0]} />
+        <Square colorKey={this.state.board[num][1]} />
+        <Square colorKey={this.state.board[num][2]} />
+        <Square colorKey={this.state.board[num][3]} />
+        <Square colorKey={this.state.board[num][4]} />
+        <Square colorKey={this.state.board[num][5]} />
+        <Square colorKey={this.state.board[num][6]} />
+        <Square colorKey={this.state.board[num][7]} />
+        <Square colorKey={this.state.board[num][8]} />
+        <Square colorKey={this.state.board[num][9]} />
+      </tr>
+    )
+  }
+  keyRouter = (e) => {
+    if (e.key === 'a') {
+      this.moveLeft();
+    } else if (e.key === 'd') {
+      this.moveRight();
+    } else if (e.key === 's') {
+      this.moveDown();
+    } else if (e.key === 'w') {
+      this.rotate(this.state.rotation);
     }
+  }
 
-    start = () => {
-      window.addEventListener('keypress', this.keyRouter)
-      if (this.state.stopped) {
-        this.setState({ stopped: false })
-        this.controlGravity('start');
-      }
-        if (!this.state.gameBegun) {
-          // this.setState({gameBegun : true})
-          this.getRandomPiece();
-        }
+  start = () => {
+    window.addEventListener('keypress', this.keyRouter)
+    if (this.state.stopped) {
+      this.setState({ stopped: false })
+      this.controlGravity('start');
     }
-
-    stop = () => {
-      window.removeEventListener('keypress', this.keyRouter)
-      // console.log('stop')
-      this.setState({ stopped: true })
-      this.controlGravity('stop')
+    if (!this.state.gameBegun) {
+      // this.setState({gameBegun : true})
+      this.getRandomPiece();
     }
+  }
 
-    getRandomPiece = () => {
-      console.log('get random piece')
-      const min = 0;
-      const max = 7;
-      const random = Math.floor(Math.random() * (max - min)) + min;
+  stop = () => {
+    // window.removeEventListener('keypress', this.keyRouter)
+    // console.log('stop')
+    this.setState({ stopped: true })
+    this.controlGravity('stop')
+  }
 
-      const pieceArray = ['O', 'I', 'S', 'Z', 'L', 'J', 'T']
-        // this.generatePiece(pieceArray[random])
-      this.generatePiece('I')
+  getRandomPiece = () => {
+    console.log('get random piece')
+    // const min = 0;
+    // const max = 7;
+    // const random = Math.floor(Math.random() * (max - min)) + min;
 
-    };
+    // const pieceArray = ['O', 'I', 'S', 'Z', 'L', 'J', 'T']
+    // this.generatePiece(pieceArray[random])
+    this.generatePiece('I')
 
-    generatePiece = (shapeName) => {
-      console.log('generate Piece')
-      
-      this.setState({
-        currentPieceName: shapeName,
-        gameBegun: true,
-        rotation: 1
-      })
-      
-      this.clearMs();
-      // this.checkForFullRows();
-      this.checkForGameOver();
-      
-      let boardCopy = this.state.board.slice()
-      let currentPiece;
-      let currentColor;
+  };
 
-      if (shapeName === 'O') {
-        currentColor = 'y';
-        currentPiece = [[0, 4], [0, 5], [1, 4], [1, 5]]
-      }
-      else if (shapeName === 'I') {
-          currentColor = 'b'
-          currentPiece = [[0, 3], [0, 4], [0, 5], [0, 6]]
-      }
-      else if (shapeName === 'S') {
-          currentColor = 'r'
-          currentPiece = [[0, 4], [0, 5], [1, 5], [1, 6]]
-      }
-      else if (shapeName === 'Z') {
-          currentColor = 'g'
-          currentPiece = [[0, 3], [0, 4], [1, 4], [1, 5]]
+  generatePiece = (shapeName) => {
+    console.log('generate Piece')
 
-      }
-      else if (shapeName === 'J') {
-          currentColor = 'o'
-          currentPiece = [[0, 3], [0, 4], [0, 5], [1, 5]]
+    this.setState({
+      currentPieceName: shapeName,
+      gameBegun: true,
+      rotation: 1
+    })
 
-      }
-      else if (shapeName === 'L') {
-          currentColor = 'p'
-          currentPiece = [[0, 3], [0, 4], [0, 5], [1, 3]]
+    this.clearMs();
+    // this.checkForFullRows();
+    this.checkForGameOver();
 
-      }
-      else if (shapeName === 'T') {
-          currentColor = 'v'
-          currentPiece = [[0, 3], [0, 4], [0, 5], [1, 4]]
-      }
-      for (let i = 0; i < currentPiece.length; i++){
-        boardCopy[currentPiece[i][0]][currentPiece[i][1]] = currentColor + 'm'
-      }
-      this.setState({
-        board: boardCopy,
-        currentPiece: currentPiece,
-        currentColor : currentColor
-      }, ()=>{
-        if (!this.state.gameBegun){
-        this.setState({gameBegun : true}, ()=>{
+    let boardCopy = this.state.board.slice()
+    let currentPiece;
+    let currentColor;
+
+    if (shapeName === 'O') {
+      currentColor = 'y';
+      currentPiece = [[0, 4], [0, 5], [1, 4], [1, 5]]
+    }
+    else if (shapeName === 'I') {
+      currentColor = 'b'
+      currentPiece = [[4, 3], [4, 4], [4, 5], [4, 6]]
+    }
+    else if (shapeName === 'S') {
+      currentColor = 'r'
+      currentPiece = [[0, 4], [0, 5], [1, 5], [1, 6]]
+    }
+    else if (shapeName === 'Z') {
+      currentColor = 'g'
+      currentPiece = [[0, 3], [0, 4], [1, 4], [1, 5]]
+
+    }
+    else if (shapeName === 'J') {
+      currentColor = 'o'
+      currentPiece = [[0, 3], [0, 4], [0, 5], [1, 5]]
+
+    }
+    else if (shapeName === 'L') {
+      currentColor = 'p'
+      currentPiece = [[0, 3], [0, 4], [0, 5], [1, 3]]
+
+    }
+    else if (shapeName === 'T') {
+      currentColor = 'v'
+      currentPiece = [[0, 3], [0, 4], [0, 5], [1, 4]]
+    }
+    for (let i = 0; i < currentPiece.length; i++) {
+      boardCopy[currentPiece[i][0]][currentPiece[i][1]] = currentColor + 'm'
+    }
+    this.setState({
+      board: boardCopy,
+      currentPiece: currentPiece,
+      currentColor: currentColor
+    }, () => {
+      if (!this.state.gameBegun) {
+        this.setState({ gameBegun: true }, () => {
           this.controlGravity('start')
         })
+      }
+    })
+  };
+
+  gravity = () => {
+    console.log('gravity')
+    // i.e., is the current piece allowed to descend, or is something in the way
+    let allowed = true;
+
+    if (this.checkForFloor() || this.checkForBlocksBeneath()) {
+      this.getRandomPiece();
+      allowed = false;
+    }
+
+    if (allowed) {
+      let boardCopy = this.state.board.slice();
+      let currentPieceCopy = this.state.currentPiece.slice();
+      //mark all the spaces corresponding to the current piece to empty
+      for (let i = 0; i < currentPieceCopy.length; i++) {
+        boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = 'e'
+      }
+      //change all the spaces below current piece to the values of current piece
+      for (let i = 0; i < currentPieceCopy.length; i++) {
+        if (currentPieceCopy[i][0] + 1 < 18) {
+          boardCopy[currentPieceCopy[i][0] + 1][currentPieceCopy[i][1]] = this.state.currentColor + 'm';
         }
+      }
+      //update the state of current piece
+      for (let i = 0; i < currentPieceCopy.length; i++) {
+        currentPieceCopy[i][0] = currentPieceCopy[i][0] + 1
+      }
+      //merge these changes into state
+      this.setState({
+        board: boardCopy,
+        currentPiece: currentPieceCopy
       })
-    };
-
-    gravity = () => {
-      console.log('gravity')
-      // i.e., is the current piece allowed to descend, or is something in the way
-      let allowed = true;
-
-      if (this.checkForFloor() || this.checkForBlocksBeneath()) {
-          this.getRandomPiece();
-          allowed = false;
-      }
-
-      if (allowed) {
-        let boardCopy = this.state.board.slice();
-        let currentPieceCopy = this.state.currentPiece.slice();
-          //mark all the spaces corresponding to the current piece to empty
-          for (let i = 0; i < currentPieceCopy.length; i++) {
-              boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = 'e'
-          }
-          //change all the spaces below current piece to the values of current piece
-          for (let i = 0; i < currentPieceCopy.length; i++) {
-              if (currentPieceCopy[i][0] + 1 < 18) {
-                  boardCopy[currentPieceCopy[i][0] + 1][currentPieceCopy[i][1]] = this.state.currentColor + 'm';
-              }
-          }
-          //update the state of current piece
-          for (let i = 0; i < currentPieceCopy.length; i++) {
-              currentPieceCopy[i][0] = currentPieceCopy[i][0] + 1
-          }
-          //merge these changes into state
-          this.setState({
-            board : boardCopy,
-            currentPiece : currentPieceCopy  
-          })
-      }
-      if (!this.state.stopped){
-        this.controlGravity('start')
-      }
     }
+    if (!this.state.stopped) {
+      this.controlGravity('start')
+    }
+  }
 
-    controlGravity = (command) =>{
-      let gravityTimeout;
-      switch(command){
-        case "start" : gravityTimeout = setTimeout(this.gravity,500); break;
-        case "stop" : clearTimeout(gravityTimeout);
+  controlGravity = (command) => {
+    let gravityTimeout;
+    switch (command) {
+      case "start": gravityTimeout = setTimeout(this.gravity, 500); break;
+      case "stop": clearTimeout(gravityTimeout);
         break;
-        default : console.log('ERR: called controlGravity without "stop" or "start"')
+      default: console.log('ERR: called controlGravity without "stop" or "start"')
+    }
+  }
+
+  checkForFloor = () => {
+    // console.log('check for floor')
+    for (let i = 0; i < this.state.currentPiece.length; i++) {
+      if (!this.state.board[this.state.currentPiece[i][0] + 1]) {
+        console.log('found floor')
+        return true
       }
     }
-    
-    checkForFloor = () => {
-      // console.log('check for floor')
-      for (let i = 0; i < this.state.currentPiece.length; i++) {
-          if (!this.state.board[this.state.currentPiece[i][0] + 1]) {
-              console.log('found floor')
-              return true
-          }
-      }
   }
   checkForBlocksBeneath = () => {
-      // console.log('check for blocks beneath')
-      for (let i = 0; i < this.state.currentPiece.length; i++) {
-          if (
-            //there is a row below
-              this.state.board[this.state.currentPiece[i][0] + 1]
-              &&
-              //the square below is not empty
-              this.state.board[this.state.currentPiece[i][0] + 1][this.state.currentPiece[i][1]] !== 'e'
-              &&
-              // the square below is not part of the current piece
-              this.state.board[this.state.currentPiece[i][0] + 1][this.state.currentPiece[i][1]] !== this.state.currentColor + 'm'
-              ){ 
-              // !this.state.currentPiece.includes([this.state.currentPiece[i][0]+1, this.state.currentPiece[i][1]])
-          // )
-              // this.setState({stopped : true}, ()=>{
-                // console.log(this.state)
-                // console.log(this.state.board[this.state.currentPiece[i][0] + 1])
-                // console.log(this.state.board[this.state.currentPiece[i][0] + 1][this.state.currentPiece[i][1]])
-                // console.log(this.state.board[this.state.currentPiece[i][0] + 1][this.state.currentPiece[i][1]])
-                return true
-              }
-          }
-        }
-        checkForBlocksRight = () => {
-          for (let i = 0; i < this.state.currentPiece.length; i++) {
-              if (
-                this.state.board[this.state.currentPiece[i][0]][this.state.currentPiece[i][1] + 1] != 'e'
-                  &&
-                  this.state.board[this.state.currentPiece[i][0]][this.state.currentPiece[i][1] + 1] != this.state.currentColor + 'm') {
-                  return true
-              }
-          }
+    // console.log('check for blocks beneath')
+    for (let i = 0; i < this.state.currentPiece.length; i++) {
+      if (
+        //there is a row below
+        this.state.board[this.state.currentPiece[i][0] + 1]
+        &&
+        //the square below is not empty
+        this.state.board[this.state.currentPiece[i][0] + 1][this.state.currentPiece[i][1]] !== 'e'
+        &&
+        // the square below is not part of the current piece
+        this.state.board[this.state.currentPiece[i][0] + 1][this.state.currentPiece[i][1]] !== this.state.currentColor + 'm'
+      ) {
+        // !this.state.currentPiece.includes([this.state.currentPiece[i][0]+1, this.state.currentPiece[i][1]])
+        // )
+        // this.setState({stopped : true}, ()=>{
+        // console.log(this.state)
+        // console.log(this.state.board[this.state.currentPiece[i][0] + 1])
+        // console.log(this.state.board[this.state.currentPiece[i][0] + 1][this.state.currentPiece[i][1]])
+        // console.log(this.state.board[this.state.currentPiece[i][0] + 1][this.state.currentPiece[i][1]])
+        return true
       }
-      checkForBlocksLeft = () => {
-          for (let i = 0; i < this.state.currentPiece.length; i++) {
-              if (
-                this.state.board[this.state.currentPiece[i][0]][this.state.currentPiece[i][1] - 1] != 'e'
-                  &&
-                  this.state.board[this.state.currentPiece[i][0]][this.state.currentPiece[i][1] - 1] != this.state.currentColor + 'm') {
-                  return true
-              }
-          }
-      }
-
-
-  
-      clearMs = () => {
-        console.log('clear ms')
-        let boardCopy = this.state.board.slice()
-        for (let i = 0; i <= 17; i++) {
-            for (let j = 0; j <= 9; j++) {
-                if (boardCopy[i][j].includes('m')) {
-                    boardCopy[i][j] = boardCopy[i][j].replace('m', '')
-                }
-            }
-        }
-        this.setState({
-          board: boardCopy
-        })
     }
-    checkForGameOver = () => {
-      console.log('check for game over')
-      let topRow = this.state.board[0];
-      for (let i = 0; i < topRow.length; i++) {
-          if (!topRow[i].includes('e')) {
-              if (!topRow[i].includes('m')) {
-                  this.stop();
-                  this.gameOver();
-                  return;
-              }
-          }
+  }
+  checkForBlocksRight = () => {
+    for (let i = 0; i < this.state.currentPiece.length; i++) {
+      if (
+        this.state.board[this.state.currentPiece[i][0]][this.state.currentPiece[i][1] + 1] !== 'e'
+        &&
+        this.state.board[this.state.currentPiece[i][0]][this.state.currentPiece[i][1] + 1] !== this.state.currentColor + 'm') {
+        return true
       }
+    }
+  }
+  checkForBlocksLeft = () => {
+    for (let i = 0; i < this.state.currentPiece.length; i++) {
+      if (
+        this.state.board[this.state.currentPiece[i][0]][this.state.currentPiece[i][1] - 1] !== 'e'
+        &&
+        this.state.board[this.state.currentPiece[i][0]][this.state.currentPiece[i][1] - 1] !== this.state.currentColor + 'm') {
+        return true
+      }
+    }
+  }
+
+
+
+  clearMs = () => {
+    console.log('clear ms')
+    let boardCopy = this.state.board.slice()
+    for (let i = 0; i <= 17; i++) {
+      for (let j = 0; j <= 9; j++) {
+        if (boardCopy[i][j].includes('m')) {
+          boardCopy[i][j] = boardCopy[i][j].replace('m', '')
+        }
+      }
+    }
+    this.setState({
+      board: boardCopy
+    })
+  }
+  checkForGameOver = () => {
+    console.log('check for game over')
+    let topRow = this.state.board[0];
+    for (let i = 0; i < topRow.length; i++) {
+      if (!topRow[i].includes('e')) {
+        if (!topRow[i].includes('m')) {
+          this.stop();
+          this.gameOver();
+          return;
+        }
+      }
+    }
   }
 
   gameOver = () => {
     console.log('gameOver')
-    this.setState({gameOver : true})
+    this.setState({ gameOver: true })
     this.stop();
-}
-moveLeft = () => {
-  let allowed = true;
-  let currentPieceCopy = this.state.currentPiece.slice();
-  let boardCopy = this.state.board.slice();
-  //If either the 'wall' or another piece is in the way
-  for (let i = 0; i < currentPieceCopy.length; i++)
+  }
+  moveLeft = () => {
+    let allowed = true;
+    let currentPieceCopy = this.state.currentPiece.slice();
+    let boardCopy = this.state.board.slice();
+    //If either the 'wall' or another piece is in the way
+    for (let i = 0; i < currentPieceCopy.length; i++)
       if (!boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1] - 1]
-          ||
-          this.checkForBlocksLeft()
+        ||
+        this.checkForBlocksLeft()
       ) {
-          allowed = false
+        allowed = false
       }
-  if (allowed) {
-    //empty out current position of current piece
+    if (allowed) {
+      //empty out current position of current piece
       for (let i = 0; i < currentPieceCopy.length; i++) {
-          boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = 'e'
+        boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = 'e'
       }
       //move those pieces left one place
       for (let i = 0; i < currentPieceCopy.length; i++) {
-          boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1] - 1] = this.state.currentColor + 'm'
+        boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1] - 1] = this.state.currentColor + 'm'
       }
       //alter current piece to match new 
       for (let i = 0; i < currentPieceCopy.length; i++) {
-          currentPieceCopy[i][1] = currentPieceCopy[i][1] - 1
+        currentPieceCopy[i][1] = currentPieceCopy[i][1] - 1
       }
       this.setState({
         board: boardCopy,
         currentPiece: currentPieceCopy
       })
-  }
-}
-moveRight = () => {
-  let allowed = true;
-  let currentPieceCopy = this.state.currentPiece.slice();
-  let boardCopy = this.state.board.slice();
-
-  for (let i = 0; i < currentPieceCopy.length; i++) {
-      if (!boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1] + 1]
-          ||
-          this.checkForBlocksRight()
-      ) {
-          allowed = false
-      }
-  }
-  if (allowed) {
-      for (let i = 0; i < currentPieceCopy.length; i++) {
-          boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = 'e'
-      }
-      for (let i = 0; i < currentPieceCopy.length; i++) {
-          boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1] + 1] = this.state.currentColor + 'm'
-      }
-      for (let i = 0; i < currentPieceCopy.length; i++) {
-          currentPieceCopy[i][1] = currentPieceCopy[i][1] + 1
-      }
-  }
-  this.setState({
-    board: boardCopy,
-    currentPiece: currentPieceCopy
-  })
-
-}
-
-moveDown = () => {
-  let allowed = true;
-  let currentPieceCopy = this.state.currentPiece.slice();
-  let boardCopy = this.state.board.slice();
-
-  for (let i = 0; i < currentPieceCopy.length; i++)
-      if (!boardCopy[currentPieceCopy[i][0] + 1]
-          ||
-          this.checkForBlocksBeneath()
-      ) {
-          allowed = false
-      }
-  if (allowed) {
-      for (let i = 0; i < currentPieceCopy.length; i++) {
-          boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = 'e'
-      }
-      for (let i = 0; i < currentPieceCopy.length; i++) {
-          boardCopy[currentPieceCopy[i][0] + 1][currentPieceCopy[i][1]] = this.state.currentColor + 'm'
-      }
-      for (let i = 0; i < currentPieceCopy.length; i++) {
-          currentPieceCopy[i][0] = currentPieceCopy[i][0] + 1
-      }
-  }
-  this.setState({
-    board: boardCopy,
-    currentPiece: currentPieceCopy
-  })
-}
-
-rotate = (rotation) =>{
-  let boardCopy = this.state.board.slice();
-  let currentPieceCopy = this.state.currentPiece.slice();
-  let rotationCopy;
-
-  if (this.state.currentPieceName === 'O') {
-    //this piece does not rotate
-} else if (this.state.currentPieceName === 'I') {
-  switch (rotation){
-    case 1 : (function(){
-      rotationCopy = 2
-
-      // emptyOldIndices();
-
-      currentPieceCopy[0][0] -= 1 
-      currentPieceCopy[0][1] += 3 
-      currentPieceCopy[1][0] += 0 
-      currentPieceCopy[1][1] += 1 
-      currentPieceCopy[2][0] -= 1 
-      currentPieceCopy[2][1] += 0 
-      currentPieceCopy[3][0] += 2 
-      currentPieceCopy[3][1] -= 1 
-    })()
-    // break;
-    // case 2 : ()=>{
-    //   rotationCopy = 3
-    //   currentPieceCopy[0][0] = 
-    //   currentPieceCopy[0][1] = 
-    //   currentPieceCopy[1][0] = 
-    //   currentPieceCopy[1][1] = 
-    //   currentPieceCopy[2][0] = 
-    //   currentPieceCopy[2][1] = 
-    //   currentPieceCopy[3][0] = 
-    //   currentPieceCopy[3][1] = 
-    // }
-    // break;
-    // case 3 : ()=>{
-    //   rotationCopy = 4
-    //   currentPieceCopy[0][0] = 
-    //   currentPieceCopy[0][1] = 
-    //   currentPieceCopy[1][0] = 
-    //   currentPieceCopy[1][1] = 
-    //   currentPieceCopy[2][0] = 
-    //   currentPieceCopy[2][1] = 
-    //   currentPieceCopy[3][0] = 
-    //   currentPieceCopy[3][1] = 
-    // }
-    // break;
-    // case 4 : ()=>{
-    //   rotationCopy = 1
-    //   currentPieceCopy[0][0] = 
-    //   currentPieceCopy[0][1] = 
-    //   currentPieceCopy[1][0] = 
-    //   currentPieceCopy[1][1] = 
-    //   currentPieceCopy[2][0] = 
-    //   currentPieceCopy[2][1] = 
-    //   currentPieceCopy[3][0] = 
-    //   currentPieceCopy[3][1] = 
     }
-  } 
-// } else if (this.state.currentPieceName === 'S') {
-// } else if (this.state.currentPieceName === 'Z') {
-// } else if (this.state.currentPieceName === 'L') {
-// } else if (this.state.currentPieceName === 'J') {
-// } else if (this.state.currentPieceName === 'T') {
-// }
-//empty indices on board corresponding to this.state.currentPiece
-for (let i = 0; i < this.state.currentPiece.length; i++){
-  boardCopy[this.state.currentPiece[i][0]][this.state.currentPiece[i][1]] = 'e'
-}
-//alter board copy to include new positions
-// for (let i = 0; i < currentPieceCopy.length; i++){
-//   boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = this.state.currentColor + 'm'
-// }
+  }
+  moveRight = () => {
+    let allowed = true;
+    let currentPieceCopy = this.state.currentPiece.slice();
+    let boardCopy = this.state.board.slice();
 
-this.setState({
-  board: boardCopy,
-  currentPiece: currentPieceCopy,
-  rotation: rotationCopy,
-})
-}
-    
-    render() {
+    for (let i = 0; i < currentPieceCopy.length; i++) {
+      if (!boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1] + 1]
+        ||
+        this.checkForBlocksRight()
+      ) {
+        allowed = false
+      }
+    }
+    if (allowed) {
+      for (let i = 0; i < currentPieceCopy.length; i++) {
+        boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = 'e'
+      }
+      for (let i = 0; i < currentPieceCopy.length; i++) {
+        boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1] + 1] = this.state.currentColor + 'm'
+      }
+      for (let i = 0; i < currentPieceCopy.length; i++) {
+        currentPieceCopy[i][1] = currentPieceCopy[i][1] + 1
+      }
+    }
+    this.setState({
+      board: boardCopy,
+      currentPiece: currentPieceCopy
+    })
 
-      return (
-        <div>
-          <GameOver id="gameOver" gameOver={this.state.gameOver}/>
+  }
+
+  moveDown = () => {
+    let allowed = true;
+    let currentPieceCopy = this.state.currentPiece.slice();
+    let boardCopy = this.state.board.slice();
+
+    for (let i = 0; i < currentPieceCopy.length; i++)
+      if (!boardCopy[currentPieceCopy[i][0] + 1]
+        ||
+        this.checkForBlocksBeneath()
+      ) {
+        allowed = false
+      }
+    if (allowed) {
+      for (let i = 0; i < currentPieceCopy.length; i++) {
+        boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = 'e'
+      }
+      for (let i = 0; i < currentPieceCopy.length; i++) {
+        boardCopy[currentPieceCopy[i][0] + 1][currentPieceCopy[i][1]] = this.state.currentColor + 'm'
+      }
+      for (let i = 0; i < currentPieceCopy.length; i++) {
+        currentPieceCopy[i][0] = currentPieceCopy[i][0] + 1
+      }
+    }
+    this.setState({
+      board: boardCopy,
+      currentPiece: currentPieceCopy
+    })
+  }
+
+  rotate = (rotation) => {
+
+    // this.setState({stopped : true})
+    // this.controlGravity('stop')
+
+    //these conditions must remain true: 
+    //currentPiece[0] is the topmost block
+if (this.rotationAllowed()){
+    let boardCopy = this.state.board.slice();
+    let currentPieceCopy = this.state.currentPiece.slice();
+    let rotationCopy;
+
+    for (let i = 0; i < currentPieceCopy.length; i++){
+      boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = 'e'
+    }
+
+    this.setState({board: boardCopy})
+      if (this.state.currentPieceName === 'O') {
+        //this piece does not rotate
+      } else if (this.state.currentPieceName === 'I') {
+        switch (rotation) {
+          case 1: (function () {
+            rotationCopy = 2;
+            currentPieceCopy[0][0] += -1;
+            currentPieceCopy[0][1] += 1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += 1;
+            currentPieceCopy[2][1] += -1;
+            currentPieceCopy[3][0] += 2;
+            currentPieceCopy[3][1] += -2;
+          })();
+            break;
+          case 2: (() => {
+            rotationCopy = 3;
+            currentPieceCopy[0][0] += 1;
+            currentPieceCopy[0][1] += 1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += -1;
+            currentPieceCopy[2][1] += -1;
+            currentPieceCopy[3][0] += -2;
+            currentPieceCopy[3][1] += -2;
+          })();
+            break;
+          case 3: (() => {
+            rotationCopy = 4;
+            currentPieceCopy[0][0] += 1;
+            currentPieceCopy[0][1] += -1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += -1;
+            currentPieceCopy[2][1] += 1;
+            currentPieceCopy[3][0] += -2;
+            currentPieceCopy[3][1] += 2;
+          })();
+            break;
+          case 4: (() => {
+            rotationCopy = 1;
+            currentPieceCopy[0][0] += -1;
+            currentPieceCopy[0][1] += -1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += 1;
+            currentPieceCopy[2][1] += 1;
+            currentPieceCopy[3][0] += 2;
+            currentPieceCopy[3][1] += 2;
+          })();
+            break;
+          default : console.log('there was a big problem');
+        }
+      }
+      // } else if (this.state.currentPieceName === 'S') {
+      // } else if (this.state.currentPieceName === 'Z') {
+      // } else if (this.state.currentPieceName === 'L') {
+      // } else if (this.state.currentPieceName === 'J') {
+      // } else if (this.state.currentPieceName === 'T') {
+      // }
+  
+      for(let i = 0; i < currentPieceCopy.length; i++){
+        boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = this.state.currentColor + 'm'
+      }
+  
+      this.setState({
+        board: boardCopy,
+        currentPiece: currentPieceCopy,
+        rotation: rotationCopy,
+      })
+    }
+  }
+  
+  rotationAllowed = () => {
+    let wontHitWalls = true;
+    let wontHitBlocks = true;
+    let leftMost = this.state.currentPiece[0][1]
+    let rightMost = this.state.currentPiece[0][1]
+    let topMost = this.state.currentPiece[0][0]
+    let bottomMost = this.state.currentPiece[0][0]
+
+    for (let i = 0; i < this.state.currentPiece; i++){
+      if(this.state.currentPiece[i][0] < topMost){
+        topMost = this.state.currentPiece[i][0]
+      }
+      if(this.state.currentPiece[i][0] > bottomMost){
+        bottomMost = this.state.currentPiece[i][0]
+      }
+      if(this.state.currentPiece[i][1] < leftMost){
+        leftMost = this.state.currentPiece[i][1]
+      }
+      if(this.state.currentPiece[i][1] > rightMost){
+        rightMost = this.state.currentPiece[i][1]
+      }
+    }
+
+    if(this.state.currentPiece === 'I'){
+      switch(this.state.rotation){
+        case 1: if(topMost === 0){wontHitWalls = false}
+                if(bottomMost > 15){wontHitWalls = false}
+                break;
+        case 2: if(leftMost < 2){wontHitWalls = false}
+                if(rightMost > 8){wontHitWalls = false}
+                break;
+        case 3: if(topMost === 0){wontHitWalls = false}
+                if(bottomMost > 15){wontHitWalls = false}
+                break;
+        case 4: if(leftMost === 0){wontHitWalls = false}
+                if(rightMost > 7){wontHitWalls = false}
+                break;
+        default: console.log('there was a big problem')
+      }
+    }
+
+  if (wontHitWalls && wontHitBlocks){
+    return true
+  }
+  }
+
+  render() {
+
+    return (
+      <div>
+        <GameOver id="gameOver" gameOver={this.state.gameOver} />
         <div id="content">
           <div id="innerDiv">
             <h1>TETRIS</h1>
@@ -511,12 +566,12 @@ this.setState({
             </table>
           </div>
         </div>
-        </div>
-      )
-    }
+      </div>
+    )
   }
+}
 
 
 
 
-  export default App;
+export default App;
