@@ -27,14 +27,3 @@ button {
   margin-bottom: 10px;
 }
 
-#gameOver {
-  background-color: black;
-  opacity: .8;
-  color: white;
-  display: inline-block;
-  position: absolute;
-  top: 49%;
-  font-size: 60px;
-  width: 99%;
-  text-align: center;
-}
