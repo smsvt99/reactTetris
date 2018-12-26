@@ -11,6 +11,7 @@ const Square = (props) => {
             case 'o' : return 'orange';
             case 'p' : return 'purple';
             case 'v' : return 'violet';
+            case 'w' : return 'white';
             default : return 'grey';	
 		}
 	}

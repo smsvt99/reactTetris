@@ -1,10 +1,14 @@
+body{
+  background-color: lightblue;
+}
 td {
   height: 22px;
   width: 22px;
-  background-color: grey;
+  background-color: darkgrey;
   border: none;
   padding: 0;
   margin: 0;
+  border: 1px solid white;
 }
 
 #content {
@@ -15,12 +19,17 @@ td {
   margin: auto;
   width: 30%;
   border: 3px solid black;
+  background-color: white;
+  padding-bottom: 20px;
+  margin-top: 20px;
+  border-radius: 20px;
 
 }
 
 table {
   margin: auto;
   padding-bottom: 20px;
+  border-collapse: collapse;
 }
 
 button {
