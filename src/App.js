@@ -89,18 +89,18 @@ class App extends Component {
 
   getRandomPiece = () => {
     console.log('get random piece')
-    // const min = 0;
-    // const max = 7;
-    // const random = Math.floor(Math.random() * (max - min)) + min;
+    const min = 0;
+    const max = 7;
+    const random = Math.floor(Math.random() * (max - min)) + min;
 
-    // const pieceArray = ['O', 'I', 'S', 'Z', 'L', 'J', 'T']
-    // this.generatePiece(pieceArray[random])
-    this.generatePiece('I')
+    const pieceArray = ['O', 'I', 'S', 'Z', 'L', 'J', 'T']
+    this.generatePiece(pieceArray[random])
+    // this.generatePiece('T')
 
   };
 
   generatePiece = (shapeName) => {
-    console.log('generate Piece')
+    // console.log('generate Piece')
 
     this.setState({
       currentPieceName: shapeName,
@@ -112,7 +112,7 @@ class App extends Component {
     // this.checkForFullRows();
     this.checkForGameOver();
 
-    let boardCopy = this.state.board.slice()
+    let boardCopy = this.state.board.map(row => row.slice()); 
     let currentPiece;
     let currentColor;
 
@@ -122,30 +122,30 @@ class App extends Component {
     }
     else if (shapeName === 'I') {
       currentColor = 'b'
-      currentPiece = [[4, 3], [4, 4], [4, 5], [4, 6]]
+      currentPiece = [[0, 3], [0, 4], [0, 5], [0, 6]]
     }
     else if (shapeName === 'S') {
-      currentColor = 'r'
-      currentPiece = [[0, 4], [0, 5], [1, 5], [1, 6]]
+      currentColor = 'g'
+      currentPiece = [[0, 4], [0, 5], [1, 3], [1, 4]]
     }
     else if (shapeName === 'Z') {
-      currentColor = 'g'
+      currentColor = 'r'
       currentPiece = [[0, 3], [0, 4], [1, 4], [1, 5]]
 
     }
     else if (shapeName === 'J') {
       currentColor = 'o'
-      currentPiece = [[0, 3], [0, 4], [0, 5], [1, 5]]
+      currentPiece = [[1, 3], [1, 4], [1, 5], [0, 3]]
 
     }
     else if (shapeName === 'L') {
       currentColor = 'p'
-      currentPiece = [[0, 3], [0, 4], [0, 5], [1, 3]]
+      currentPiece = [[1, 3], [1, 4], [1, 5], [0, 5]]
 
     }
     else if (shapeName === 'T') {
       currentColor = 'v'
-      currentPiece = [[0, 3], [0, 4], [0, 5], [1, 4]]
+      currentPiece = [[1, 3], [1, 4], [1, 5], [0, 4]]
     }
     for (let i = 0; i < currentPiece.length; i++) {
       boardCopy[currentPiece[i][0]][currentPiece[i][1]] = currentColor + 'm'
@@ -164,7 +164,7 @@ class App extends Component {
   };
 
   gravity = () => {
-    console.log('gravity')
+    // console.log('gravity')
     // i.e., is the current piece allowed to descend, or is something in the way
     let allowed = true;
 
@@ -174,8 +174,8 @@ class App extends Component {
     }
 
     if (allowed) {
-      let boardCopy = this.state.board.slice();
-      let currentPieceCopy = this.state.currentPiece.slice();
+      let boardCopy = this.state.board.map(row => row.slice()); 
+      let currentPieceCopy = this.state.currentPiece.map(piece => piece.slice());
       //mark all the spaces corresponding to the current piece to empty
       for (let i = 0; i < currentPieceCopy.length; i++) {
         boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = 'e'
@@ -269,7 +269,7 @@ class App extends Component {
 
   clearMs = () => {
     console.log('clear ms')
-    let boardCopy = this.state.board.slice()
+    let boardCopy = this.state.board.map(row => row.slice()); 
     for (let i = 0; i <= 17; i++) {
       for (let j = 0; j <= 9; j++) {
         if (boardCopy[i][j].includes('m')) {
@@ -302,8 +302,8 @@ class App extends Component {
   }
   moveLeft = () => {
     let allowed = true;
-    let currentPieceCopy = this.state.currentPiece.slice();
-    let boardCopy = this.state.board.slice();
+    let boardCopy = this.state.board.map(row => row.slice()); 
+		let currentPieceCopy = this.state.currentPiece.map(piece => piece.slice());
     //If either the 'wall' or another piece is in the way
     for (let i = 0; i < currentPieceCopy.length; i++)
       if (!boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1] - 1]
@@ -333,8 +333,8 @@ class App extends Component {
   }
   moveRight = () => {
     let allowed = true;
-    let currentPieceCopy = this.state.currentPiece.slice();
-    let boardCopy = this.state.board.slice();
+    let boardCopy = this.state.board.map(row => row.slice()); 
+		let currentPieceCopy = this.state.currentPiece.map(piece => piece.slice());
 
     for (let i = 0; i < currentPieceCopy.length; i++) {
       if (!boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1] + 1]
@@ -364,8 +364,8 @@ class App extends Component {
 
   moveDown = () => {
     let allowed = true;
-    let currentPieceCopy = this.state.currentPiece.slice();
-    let boardCopy = this.state.board.slice();
+    let boardCopy = this.state.board.map(row => row.slice()); 
+		let currentPieceCopy = this.state.currentPiece.map(piece => piece.slice());
 
     for (let i = 0; i < currentPieceCopy.length; i++)
       if (!boardCopy[currentPieceCopy[i][0] + 1]
@@ -391,26 +391,160 @@ class App extends Component {
     })
   }
 
+//   rotate = (rotation) => {
+
+//     // this.setState({stopped : true})
+//     // this.controlGravity('stop')
+
+//     //these conditions must remain true: 
+//     //currentPiece[0] is the topmost block
+// if (this.rotationAllowed()){
+//     let boardCopy = this.state.board.slice();
+//     let currentPieceCopy = this.state.currentPiece.slice();
+//     let rotationCopy;
+
+//     for (let i = 0; i < currentPieceCopy.length; i++){
+//       boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = 'e'
+//     }
+
+//     this.setState({board: boardCopy})
+//       if (this.state.currentPieceName === 'O') {
+//         //this piece does not rotate
+//       } else if (this.state.currentPieceName === 'I') {
+//         switch (rotation) {
+//           case 1: (function () {
+//             rotationCopy = 2;
+//             currentPieceCopy[0][0] += -1;
+//             currentPieceCopy[0][1] += 1;
+//             currentPieceCopy[1][0] += 0;
+//             currentPieceCopy[1][1] += 0;
+//             currentPieceCopy[2][0] += 1;
+//             currentPieceCopy[2][1] += -1;
+//             currentPieceCopy[3][0] += 2;
+//             currentPieceCopy[3][1] += -2;
+//           })();
+//             break;
+//           case 2: (() => {
+//             rotationCopy = 3;
+//             currentPieceCopy[0][0] += 1;
+//             currentPieceCopy[0][1] += 1;
+//             currentPieceCopy[1][0] += 0;
+//             currentPieceCopy[1][1] += 0;
+//             currentPieceCopy[2][0] += -1;
+//             currentPieceCopy[2][1] += -1;
+//             currentPieceCopy[3][0] += -2;
+//             currentPieceCopy[3][1] += -2;
+//           })();
+//             break;
+//           case 3: (() => {
+//             rotationCopy = 4;
+//             currentPieceCopy[0][0] += 1;
+//             currentPieceCopy[0][1] += -1;
+//             currentPieceCopy[1][0] += 0;
+//             currentPieceCopy[1][1] += 0;
+//             currentPieceCopy[2][0] += -1;
+//             currentPieceCopy[2][1] += 1;
+//             currentPieceCopy[3][0] += -2;
+//             currentPieceCopy[3][1] += 2;
+//           })();
+//             break;
+//           case 4: (() => {
+//             rotationCopy = 1;
+//             currentPieceCopy[0][0] += -1;
+//             currentPieceCopy[0][1] += -1;
+//             currentPieceCopy[1][0] += 0;
+//             currentPieceCopy[1][1] += 0;
+//             currentPieceCopy[2][0] += 1;
+//             currentPieceCopy[2][1] += 1;
+//             currentPieceCopy[3][0] += 2;
+//             currentPieceCopy[3][1] += 2;
+//           })();
+//             break;
+//           default : console.log('there was a big problem');
+//         }
+//       }
+//       // } else if (this.state.currentPieceName === 'S') {
+//       // } else if (this.state.currentPieceName === 'Z') {
+//       // } else if (this.state.currentPieceName === 'L') {
+//       // } else if (this.state.currentPieceName === 'J') {
+//       // } else if (this.state.currentPieceName === 'T') {
+//       // }
+  
+//       for(let i = 0; i < currentPieceCopy.length; i++){
+//         boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = this.state.currentColor + 'm'
+//       }
+  
+//       this.setState({
+//         board: boardCopy,
+//         currentPiece: currentPieceCopy,
+//         rotation: rotationCopy,
+//       })
+//     }
+//   }
+  
+  // rotationAllowed = () => {
+  //       let wontHitWalls = true;
+  //   let wontHitBlocks = true;
+  //   const currentPieceCopy = this.state.currentPiece.slice();
+  //   let leftMost = currentPieceCopy[0][1]
+  //   let rightMost = currentPieceCopy[1][1]
+  //   let topMost = currentPieceCopy[0][0]
+  //   let bottomMost = currentPieceCopy[1][0]
+   
+  //   for (let i = 0; i < currentPieceCopy.length; i++){
+  //     if(currentPieceCopy[i][0] < topMost){
+  //       topMost = currentPieceCopy[i][0]
+  //     } 
+  //     if(currentPieceCopy[i][0] > bottomMost){
+  //       bottomMost = currentPieceCopy[i][0]
+  //     }
+  //     if(currentPieceCopy[i][1] < leftMost){
+  //       leftMost = currentPieceCopy[i][1]
+  //     }
+  //     if(currentPieceCopy[i][1] > rightMost){
+  //       rightMost = currentPieceCopy[i][1]
+  //     }
+  //   }
+
+  //   console.log('top bottom left right')
+  //   console.log(topMost);
+  //   console.log(bottomMost);
+  //   console.log(leftMost);
+  //   console.log(rightMost);
+
+  //   if (this.state.currentPieceName === 'I'){
+  //     console.log('in the IF')
+  //     switch(this.state.rotation){
+  //       case 1: if(topMost === 0){wontHitWalls = false};
+  //               if(bottomMost > 15){wontHitWalls = false};
+  //               break;
+  //       case 2: if(leftMost < 2){wontHitWalls = false};
+  //               if(rightMost > 8){wontHitWalls = false};
+  //               break;
+  //       case 3: if(topMost === 0){wontHitWalls = false};
+  //               if(bottomMost > 15){wontHitWalls = false};
+  //               break;
+  //       case 4: if(leftMost === 0){wontHitWalls = false};
+  //               if(rightMost > 7){wontHitWalls = false};
+  //               break;
+  //       default: console.log('there was a big problem')
+  //     }
+  //   }
+  // console.log(wontHitBlocks && wontHitWalls)
+  // return wontHitBlocks && wontHitWalls
+  // }
+
   rotate = (rotation) => {
-
-    // this.setState({stopped : true})
-    // this.controlGravity('stop')
-
-    //these conditions must remain true: 
-    //currentPiece[0] is the topmost block
-if (this.rotationAllowed()){
-    let boardCopy = this.state.board.slice();
-    let currentPieceCopy = this.state.currentPiece.slice();
+    console.log('rotate')
+    // let currentPieceCopy = this.state.currentPiece.slice()
+    // let boardCopy = this.state.board.slice()
+    let boardCopy = this.state.board.map(row => row.slice()); 
+    let currentPieceCopy = this.state.currentPiece.map(piece => piece.slice());
     let rotationCopy;
 
-    for (let i = 0; i < currentPieceCopy.length; i++){
-      boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = 'e'
-    }
-
-    this.setState({board: boardCopy})
       if (this.state.currentPieceName === 'O') {
         //this piece does not rotate
-      } else if (this.state.currentPieceName === 'I') {
+      } else if (this.state.currentPieceName === 'I') { 
         switch (rotation) {
           case 1: (function () {
             rotationCopy = 2;
@@ -462,71 +596,305 @@ if (this.rotationAllowed()){
             break;
           default : console.log('there was a big problem');
         }
+      } else if (this.state.currentPieceName === 'S') {
+        switch (rotation) {
+          case 1: (function () {
+            rotationCopy = 2;
+            currentPieceCopy[0][0] += 1;
+            currentPieceCopy[0][1] += 1;
+            currentPieceCopy[1][0] += 2;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += -1;
+            currentPieceCopy[2][1] += 1;
+            currentPieceCopy[3][0] += 0;
+            currentPieceCopy[3][1] += 0;
+          })();
+            break;
+          case 2: (() => {
+            rotationCopy = 3;
+            currentPieceCopy[0][0] += 1;
+            currentPieceCopy[0][1] += -1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += -2;
+            currentPieceCopy[2][0] += 1;
+            currentPieceCopy[2][1] += 1;
+            currentPieceCopy[3][0] += 0;
+            currentPieceCopy[3][1] += 0;
+          })();
+            break;
+          case 3: (() => {
+            rotationCopy = 4;
+            currentPieceCopy[0][0] += -1;
+            currentPieceCopy[0][1] += -1;
+            currentPieceCopy[1][0] += -2;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += 1;
+            currentPieceCopy[2][1] += -1;
+            currentPieceCopy[3][0] += 0;
+            currentPieceCopy[3][1] += 0;
+          })();
+            break;
+          case 4: (() => {
+            rotationCopy = 1;
+            currentPieceCopy[0][0] += -1;
+            currentPieceCopy[0][1] += 1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 2;
+            currentPieceCopy[2][0] += -1;
+            currentPieceCopy[2][1] += -1;
+            currentPieceCopy[3][0] += 0;
+            currentPieceCopy[3][1] += 0;
+          })();
       }
-      // } else if (this.state.currentPieceName === 'S') {
-      // } else if (this.state.currentPieceName === 'Z') {
-      // } else if (this.state.currentPieceName === 'L') {
-      // } else if (this.state.currentPieceName === 'J') {
-      // } else if (this.state.currentPieceName === 'T') {
-      // }
-  
-      for(let i = 0; i < currentPieceCopy.length; i++){
-        boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = this.state.currentColor + 'm'
+      } else if (this.state.currentPieceName === 'Z') {
+        switch (rotation) {
+          case 1: (function () {
+            rotationCopy = 2;
+            currentPieceCopy[0][0] += 0;
+            currentPieceCopy[0][1] += 2;
+            currentPieceCopy[1][0] += 1;
+            currentPieceCopy[1][1] += 1;
+            currentPieceCopy[2][0] += 0;
+            currentPieceCopy[2][1] += 0;
+            currentPieceCopy[3][0] += 1;
+            currentPieceCopy[3][1] += -1;
+          })();
+            break;
+          case 2: (() => {
+            rotationCopy = 3;
+            currentPieceCopy[0][0] += 2;
+            currentPieceCopy[0][1] += 0;
+            currentPieceCopy[1][0] += 1;
+            currentPieceCopy[1][1] += -1;
+            currentPieceCopy[2][0] += 0;
+            currentPieceCopy[2][1] += 0;
+            currentPieceCopy[3][0] += -1;
+            currentPieceCopy[3][1] += -1;
+          })();
+            break;
+          case 3: (() => {
+            rotationCopy = 4;
+            currentPieceCopy[0][0] += 0;
+            currentPieceCopy[0][1] += -2;
+            currentPieceCopy[1][0] += -1;
+            currentPieceCopy[1][1] += -1;
+            currentPieceCopy[2][0] += 0;
+            currentPieceCopy[2][1] += 0;
+            currentPieceCopy[3][0] += -1;
+            currentPieceCopy[3][1] += 1;
+          })();
+            break;
+          case 4: (() => {
+            rotationCopy = 1;
+            currentPieceCopy[0][0] += -2;
+            currentPieceCopy[0][1] += 0;
+            currentPieceCopy[1][0] += -1;
+            currentPieceCopy[1][1] += 1;
+            currentPieceCopy[2][0] += 0;
+            currentPieceCopy[2][1] += 0;
+            currentPieceCopy[3][0] += 1;
+            currentPieceCopy[3][1] += 1;
+          })();
+      }
+      } else if (this.state.currentPieceName === 'L') {
+        switch (rotation) {
+          case 1: (function () {
+            rotationCopy = 2;
+            currentPieceCopy[0][0] += -1;
+            currentPieceCopy[0][1] += 1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += 1;
+            currentPieceCopy[2][1] += -1;
+            currentPieceCopy[3][0] += 2;
+            currentPieceCopy[3][1] += 0;
+          })();
+            break;
+          case 2: (() => {
+            rotationCopy = 3;
+            currentPieceCopy[0][0] += 1;
+            currentPieceCopy[0][1] += 1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += -1;
+            currentPieceCopy[2][1] += -1;
+            currentPieceCopy[3][0] += 0;
+            currentPieceCopy[3][1] += -2;
+          })();
+            break;
+          case 3: (() => {
+            rotationCopy = 4;
+            currentPieceCopy[0][0] += 1;
+            currentPieceCopy[0][1] += -1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += -1;
+            currentPieceCopy[2][1] += 1;
+            currentPieceCopy[3][0] += -2;
+            currentPieceCopy[3][1] += 0;
+          })();
+            break;
+          case 4: (() => {
+            rotationCopy = 1;
+            currentPieceCopy[0][0] += -1;
+            currentPieceCopy[0][1] += -1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += 1;
+            currentPieceCopy[2][1] += 1;
+            currentPieceCopy[3][0] += 0;
+            currentPieceCopy[3][1] += 2;
+          })();
+      }
+      } else if (this.state.currentPieceName === 'J') {
+        switch (rotation) {
+          case 1: (function () {
+            rotationCopy = 2;
+            currentPieceCopy[0][0] += -1;
+            currentPieceCopy[0][1] += 1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += 1;
+            currentPieceCopy[2][1] += -1;
+            currentPieceCopy[3][0] += 0;
+            currentPieceCopy[3][1] += 2;
+          })();
+            break;
+          case 2: (() => {
+            rotationCopy = 3;
+            currentPieceCopy[0][0] += 1;
+            currentPieceCopy[0][1] += 1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += -1;
+            currentPieceCopy[2][1] += -1;
+            currentPieceCopy[3][0] += 2;
+            currentPieceCopy[3][1] += 0;
+          })();
+            break;
+          case 3: (() => {
+            rotationCopy = 4;
+            currentPieceCopy[0][0] += 1;
+            currentPieceCopy[0][1] += -1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += -1;
+            currentPieceCopy[2][1] += 1;
+            currentPieceCopy[3][0] += 0;
+            currentPieceCopy[3][1] += -2;
+          })();
+            break;
+          case 4: (() => {
+            rotationCopy = 1;
+            currentPieceCopy[0][0] += -1;
+            currentPieceCopy[0][1] += -1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += 1;
+            currentPieceCopy[2][1] += 1;
+            currentPieceCopy[3][0] += -2;
+            currentPieceCopy[3][1] += 0;
+          })();
+      }
+    
+      } else if (this.state.currentPieceName === 'T') {
+        switch (rotation) {
+          case 1: (function () {
+            rotationCopy = 2;
+            currentPieceCopy[0][0] += -1;
+            currentPieceCopy[0][1] += 1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += 1;
+            currentPieceCopy[2][1] += -1;
+            currentPieceCopy[3][0] += 1;
+            currentPieceCopy[3][1] += 1;
+          })();
+            break;
+          case 2: (() => {
+            rotationCopy = 3;
+            currentPieceCopy[0][0] += 1;
+            currentPieceCopy[0][1] += 1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += -1;
+            currentPieceCopy[2][1] += -1;
+            currentPieceCopy[3][0] += 1;
+            currentPieceCopy[3][1] += -1;
+          })();
+            break;
+          case 3: (() => {
+            rotationCopy = 4;
+            currentPieceCopy[0][0] += 1;
+            currentPieceCopy[0][1] += -1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += -1;
+            currentPieceCopy[2][1] += 1;
+            currentPieceCopy[3][0] += -1;
+            currentPieceCopy[3][1] += -1;
+          })();
+            break;
+          case 4: (() => {
+            rotationCopy = 1;
+            currentPieceCopy[0][0] += -1;
+            currentPieceCopy[0][1] += -1;
+            currentPieceCopy[1][0] += 0;
+            currentPieceCopy[1][1] += 0;
+            currentPieceCopy[2][0] += 1;
+            currentPieceCopy[2][1] += 1;
+            currentPieceCopy[3][0] += -1;
+            currentPieceCopy[3][1] += 1;
+          })();
+      }
       }
   
-      this.setState({
-        board: boardCopy,
-        currentPiece: currentPieceCopy,
-        rotation: rotationCopy,
-      })
+
+  if (this.rotationAllowed(currentPieceCopy)){
+    console.log(this.state.currentPiece)
+    for (let i = 0; i < this.state.currentPiece.length; i++){
+      console.log('did loop')
+      boardCopy[this.state.currentPiece[i][0]][this.state.currentPiece[i][1]] = 'e'
+      } 
+    for (let i = 0; i < currentPieceCopy.length; i++){
+      boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = this.state.currentColor + 'm'
+    }
+    this.setState({
+      board: boardCopy,
+      currentPiece: currentPieceCopy,
+      rotation: rotationCopy
+    })
+  
     }
   }
+
+rotationAllowed = (hypotheticalPiece) => {
+  let wontHitWalls = true;
+  let wontHitBlocks = true;
   
-  rotationAllowed = () => {
-    let wontHitWalls = true;
-    let wontHitBlocks = true;
-    let leftMost = this.state.currentPiece[0][1]
-    let rightMost = this.state.currentPiece[0][1]
-    let topMost = this.state.currentPiece[0][0]
-    let bottomMost = this.state.currentPiece[0][0]
+  for (let i = 0; i < hypotheticalPiece.length; i++){
+    if (hypotheticalPiece[i][0] < 0){
+      wontHitWalls = false
+    } if (hypotheticalPiece[i][0] > 17){
+      wontHitWalls = false
+    } if (hypotheticalPiece[i][1] < 0){
+      wontHitWalls = false
+    } if (hypotheticalPiece[i][1] > 9){
+      wontHitWalls = false
+    }
+  }
 
-    for (let i = 0; i < this.state.currentPiece; i++){
-      if(this.state.currentPiece[i][0] < topMost){
-        topMost = this.state.currentPiece[i][0]
-      }
-      if(this.state.currentPiece[i][0] > bottomMost){
-        bottomMost = this.state.currentPiece[i][0]
-      }
-      if(this.state.currentPiece[i][1] < leftMost){
-        leftMost = this.state.currentPiece[i][1]
-      }
-      if(this.state.currentPiece[i][1] > rightMost){
-        rightMost = this.state.currentPiece[i][1]
+  for (let i = 0; i < hypotheticalPiece.length; i++){
+    if (this.state.board[hypotheticalPiece[i][0]][[hypotheticalPiece[i][1]]] !== 'e'){
+      if (this.state.board[hypotheticalPiece[i][0]][[hypotheticalPiece[i][1]]] !== this.state.currentColor + 'm'){
+        wontHitBlocks = false;
       }
     }
-
-    if(this.state.currentPiece === 'I'){
-      switch(this.state.rotation){
-        case 1: if(topMost === 0){wontHitWalls = false}
-                if(bottomMost > 15){wontHitWalls = false}
-                break;
-        case 2: if(leftMost < 2){wontHitWalls = false}
-                if(rightMost > 8){wontHitWalls = false}
-                break;
-        case 3: if(topMost === 0){wontHitWalls = false}
-                if(bottomMost > 15){wontHitWalls = false}
-                break;
-        case 4: if(leftMost === 0){wontHitWalls = false}
-                if(rightMost > 7){wontHitWalls = false}
-                break;
-        default: console.log('there was a big problem')
-      }
-    }
-
-  if (wontHitWalls && wontHitBlocks){
-    return true
   }
-  }
+  console.log('walls', wontHitWalls)
+  console.log('blocks', wontHitBlocks)
+  return (wontHitWalls && wontHitBlocks)
+}
 
   render() {
 
