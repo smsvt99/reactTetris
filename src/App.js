@@ -37,10 +37,6 @@ class App extends Component {
     rotation: 1
   }
 
-  logBoard = () => {
-    console.log(this.state.board)
-  }
-
   makeRow = (num) => {
     return (
       <tr>
@@ -82,26 +78,22 @@ class App extends Component {
   }
 
   stop = () => {
-    // window.removeEventListener('keypress', this.keyRouter)
-    // console.log('stop')
+    window.removeEventListener('keypress', this.keyRouter)
     this.setState({ stopped: true })
     this.controlGravity('stop')
   }
 
   getRandomPiece = () => {
-    console.log('get random piece')
     const min = 0;
     const max = 7;
     const random = Math.floor(Math.random() * (max - min)) + min;
 
     const pieceArray = ['O', 'I', 'S', 'Z', 'L', 'J', 'T']
     this.generatePiece(pieceArray[random])
-    // this.generatePiece('T')
-
+    // this.generatePiece('I')
   };
 
   generatePiece = (shapeName) => {
-    // console.log('generate Piece')
 
     this.setState({
       currentPieceName: shapeName,
@@ -165,7 +157,6 @@ class App extends Component {
   };
 
   gravity = () => {
-    // console.log('gravity')
     // i.e., is the current piece allowed to descend, or is something in the way
     let allowed = true;
 
@@ -212,16 +203,13 @@ class App extends Component {
   }
 
   checkForFloor = () => {
-    // console.log('check for floor')
     for (let i = 0; i < this.state.currentPiece.length; i++) {
       if (!this.state.board[this.state.currentPiece[i][0] + 1]) {
-        console.log('found floor')
         return true
       }
     }
   }
   checkForBlocksBeneath = () => {
-    // console.log('check for blocks beneath')
     for (let i = 0; i < this.state.currentPiece.length; i++) {
       if (
         //there is a row below
@@ -233,13 +221,6 @@ class App extends Component {
         // the square below is not part of the current piece
         this.state.board[this.state.currentPiece[i][0] + 1][this.state.currentPiece[i][1]] !== this.state.currentColor + 'm'
       ) {
-        // !this.state.currentPiece.includes([this.state.currentPiece[i][0]+1, this.state.currentPiece[i][1]])
-        // )
-        // this.setState({stopped : true}, ()=>{
-        // console.log(this.state)
-        // console.log(this.state.board[this.state.currentPiece[i][0] + 1])
-        // console.log(this.state.board[this.state.currentPiece[i][0] + 1][this.state.currentPiece[i][1]])
-        // console.log(this.state.board[this.state.currentPiece[i][0] + 1][this.state.currentPiece[i][1]])
         return true
       }
     }
@@ -268,7 +249,6 @@ class App extends Component {
 
 
   clearMs = () => {
-    console.log('clear ms')
     let boardCopy = this.state.board.map(row => row.slice());
     for (let i = 0; i <= 17; i++) {
       for (let j = 0; j <= 9; j++) {
@@ -282,7 +262,6 @@ class App extends Component {
     })
   }
   checkForGameOver = () => {
-    console.log('check for game over')
     let topRow = this.state.board[0];
     for (let i = 0; i < topRow.length; i++) {
       if (!topRow[i].includes('e')) {
@@ -296,7 +275,6 @@ class App extends Component {
   }
 
   gameOver = () => {
-    console.log('gameOver')
     this.setState({ gameOver: true })
     this.stop();
   }
@@ -392,9 +370,6 @@ class App extends Component {
   }
 
   rotate = (rotation) => {
-    console.log('rotate')
-    // let currentPieceCopy = this.state.currentPiece.slice()
-    // let boardCopy = this.state.board.slice()
     let boardCopy = this.state.board.map(row => row.slice());
     let currentPieceCopy = this.state.currentPiece.map(piece => piece.slice());
     let rotationCopy;
@@ -502,6 +477,8 @@ class App extends Component {
           currentPieceCopy[3][0] += 0;
           currentPieceCopy[3][1] += 0;
         })();
+        break;
+        default: console.log('there was a big problem');
       }
     } else if (this.state.currentPieceName === 'Z') {
       switch (rotation) {
@@ -552,6 +529,8 @@ class App extends Component {
           currentPieceCopy[3][0] += 1;
           currentPieceCopy[3][1] += 1;
         })();
+        break;
+        default: console.log('there was a big problem');
       }
     } else if (this.state.currentPieceName === 'L') {
       switch (rotation) {
@@ -602,6 +581,8 @@ class App extends Component {
           currentPieceCopy[3][0] += 0;
           currentPieceCopy[3][1] += 2;
         })();
+        break;
+        default: console.log('there was a big problem');
       }
     } else if (this.state.currentPieceName === 'J') {
       switch (rotation) {
@@ -652,6 +633,8 @@ class App extends Component {
           currentPieceCopy[3][0] += -2;
           currentPieceCopy[3][1] += 0;
         })();
+        break;
+        default: console.log('there was a big problem');
       }
 
     } else if (this.state.currentPieceName === 'T') {
@@ -703,14 +686,14 @@ class App extends Component {
           currentPieceCopy[3][0] += -1;
           currentPieceCopy[3][1] += 1;
         })();
+        break;
+        default: console.log('there was a big problem');
       }
     }
 
 
     if (this.rotationAllowed(currentPieceCopy)) {
-      console.log(this.state.currentPiece)
       for (let i = 0; i < this.state.currentPiece.length; i++) {
-        console.log('did loop')
         boardCopy[this.state.currentPiece[i][0]][this.state.currentPiece[i][1]] = 'e'
       }
       for (let i = 0; i < currentPieceCopy.length; i++) {
@@ -730,18 +713,20 @@ class App extends Component {
     let wontHitBlocks = true;
 
     for (let i = 0; i < hypotheticalPiece.length; i++) {
-      // if (hypotheticalPiece[i][0] < 0) {
-      //   wontHitWalls = false
-      // } if (hypotheticalPiece[i][0] > 17) {
-      //   wontHitWalls = false
-      // } if (hypotheticalPiece[i][1] < 0) {
-      //   wontHitWalls = false
-      // } if (hypotheticalPiece[i][1] > 9) {
-      //   wontHitWalls = false
-      // }
-      if (!this.state.board[hypotheticalPiece[i][0]][hypotheticalPiece[i][1]]){
-        wontHitWalls = false;
+      if (hypotheticalPiece[i][0] < 0) {
+        wontHitWalls = false
+      } if (hypotheticalPiece[i][0] > 17) {
+        wontHitWalls = false
+      } if (hypotheticalPiece[i][1] < 0) {
+        wontHitWalls = false
+      } if (hypotheticalPiece[i][1] > 9) {
+        wontHitWalls = false
       }
+    }
+    
+    //this is an (inelegant) fix; will fail otherwise.
+    if(!wontHitWalls){
+      return false
     }
 
     for (let i = 0; i < hypotheticalPiece.length; i++) {
@@ -751,8 +736,6 @@ class App extends Component {
         }
       }
     }
-    console.log('walls', wontHitWalls)
-    console.log('blocks', wontHitBlocks)
     return (wontHitWalls && wontHitBlocks)
   }
 
@@ -769,7 +752,6 @@ class App extends Component {
         gravitySpeed : this.state.gravitySpeed - (fullRowArray.length * 3)
       })
       this.colorFullRow(fullRowArray)
-      console.log(fullRowArray)
     }
   }
   colorFullRow = (array) => {
@@ -782,18 +764,23 @@ class App extends Component {
     this.setState({board: boardCopy})
     setTimeout(()=>{
       this.shiftBlocksDown(array);
-    },500)
+    },400)
 }
 shiftBlocksDown = (array) => {
   let boardCopy = this.state.board.map(row => row.slice());
+  // array is an array of in indices of full rows.
   //begginning with the row above the lowest full row, shift the values of each row down one. If there are multiple full rows, repeat.
-  // let layer = 0;
   for (let i = 0; i < array.length; i++) {
       for (let j = array[i]; j > -1; j--) {
           if (j === 0) {
               boardCopy[j] = ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e']
           } else {
-              boardCopy[j] = boardCopy[j - 1]
+              // old: boardCopy[j] = boardCopy[j - 1]
+              for (let k = 0; k < 10; k++){
+                if (!boardCopy[j -1][k].includes('m') && !boardCopy[j][k].includes('m')){
+                  boardCopy[j][k] = boardCopy[j - 1][k]
+                }
+              }
           }
       }
   }
@@ -813,7 +800,6 @@ shiftBlocksDown = (array) => {
             <p>SCORE: {this.state.score} SPEED: {this.state.gravitySpeed} ms</p>
             <button onClick={this.start}>Start</button>
             <button onClick={this.stop}>Stop</button>
-            <button onClick={this.logBoard}>Log Board</button>
             <table>
               <tbody>
                 {this.makeRow(0)}
@@ -842,8 +828,5 @@ shiftBlocksDown = (array) => {
     )
   }
 }
-
-
-
 
 export default App;
