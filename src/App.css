@@ -1,5 +1,5 @@
 body{
-  background-color: lightblue;
+  background: linear-gradient(lightblue, lightcyan);
 }
 td {
   height: 22px;
