@@ -3,14 +3,22 @@ import Square from '../Square/Square'
 
 const rankStyle = {
     display: 'inline',
-    fontSize: '70px',
-    marginRight: '30px'
+    fontSize: '60px',
+    marginRight: '10px',
+    marginLeft: '25px',
+    textAlign: 'center'
 }
 const nameStyle = {
     display: 'inline',
+    fontSize: '35px',
+    maxWidth: '90%',
+    marginBottom: '10px',
+    marginTop: '10px'
 }
 const scoreStyle = {
+    marginTop: '0px',
     display: 'inline',
+    marginBottom: '15px',
 }
 const tableStyle = {
     display: 'inline',
@@ -20,11 +28,12 @@ const containerStyle = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    width: '100%',
 }
 const columnStyle = {
     border: '3px solid black',
     borderRadius: '20px',
-    margin: '5px 20px',
+    margin: '20px 20px',
     padding: '5px',
     backgroundColor: 'white',
     width: '20%',
@@ -33,6 +42,18 @@ const columnStyle = {
     justifyContent: 'space-around',
     alignContent: 'center',
     alignItems: 'center',
+}
+const boardStyle = {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    padding: '50px',
+    paddingTop: '20px'
+}
+const titleStyle = {
+    textAlign: 'center',
+    marginTop: '50px',
+    marginBottom: '20px'
 }
 
 const ScoreBoard = (props) => {
@@ -52,43 +73,67 @@ const ScoreBoard = (props) => {
             </tr>
         )
     }
-    if (props.showScores) {
-        return (
-            <div style={columnStyle}>
-                <h1 style={nameStyle}>{props.savedStates[0].name}</h1>
-                <div style={containerStyle}>
-                    <h1 style={rankStyle}>1st</h1>
-                    <table style={tableStyle}>
-                        <tbody>
-                            {makeRow(0, 0)}
-                            {makeRow(1, 0)}
-                            {makeRow(2, 0)}
-                            {makeRow(3, 0)}
-                            {makeRow(4, 0)}
-                            {makeRow(5, 0)}
-                            {makeRow(6, 0)}
-                            {makeRow(7, 0)}
-                            {makeRow(8, 0)}
-                            {makeRow(9, 0)}
-                            {makeRow(10, 0)}
-                            {makeRow(11, 0)}
-                            {makeRow(12, 0)}
-                            {makeRow(13, 0)}
-                            {makeRow(14, 0)}
-                            {makeRow(15, 0)}
-                            {makeRow(16, 0)}
-                            {makeRow(17, 0)}
-                        </tbody>
-                    </table>
+    function makeCard(i, rank, crown){
+            return (
+                <div style={columnStyle}>
+                    <h1 style={nameStyle}>{crown + props.savedStates[i].name}</h1>
+                    <div style={containerStyle}>
+                        <h1 style={rankStyle}>{rank}</h1>
+                        <table style={tableStyle}>
+                            <tbody>
+                                {makeRow(0, i)}
+                                {makeRow(1, i)}
+                                {makeRow(2, i)}
+                                {makeRow(3, i)}
+                                {makeRow(4, i)}
+                                {makeRow(5, i)}
+                                {makeRow(6, i)}
+                                {makeRow(7, i)}
+                                {makeRow(8, i)}
+                                {makeRow(9, i)}
+                                {makeRow(10, i)}
+                                {makeRow(11, i)}
+                                {makeRow(12, i)}
+                                {makeRow(13, i)}
+                                {makeRow(14, i)}
+                                {makeRow(15, i)}
+                                {makeRow(16, i)}
+                                {makeRow(17, i)}
+                            </tbody>
+                        </table>
+                    </div>
+                    <h1 style={scoreStyle}>{props.savedStates[i].score} points</h1>
                 </div>
-                <h1 style={scoreStyle}>{props.savedStates[0].score} points</h1>
-            </div>
+    
+            )
+ 
+    }
+    if (props.showScores) {
 
-        )
-    } else {
+    return (
+        <div>
+        <h1 style={titleStyle}>React TETRIS High Scores</h1>
+
+        <div style={boardStyle}>
+            {makeCard(0, '1st', '👑 ')}
+            {makeCard(1, '2nd', '')}
+            {makeCard(0, '3rd', '')}
+            {makeCard(1, '4th', '')}
+            {makeCard(0, '5th', '')}
+            {makeCard(1, '6th', '')}
+            {makeCard(0, '7th', '')}
+            {makeCard(1, '8th', '')}
+            {makeCard(1, '9th', '')}
+            {makeCard(1, '10th', '')}
+            {makeCard(1, '11th', '')}
+            {makeCard(1, '12th', '')}
+        </div>
+        </div>
+    )} else {
         return null;
     }
-
 }
+    
+
 
 export default ScoreBoard;

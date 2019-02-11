@@ -71,7 +71,7 @@ class App extends Component {
       score: 10,
       gravitySpeed: 500,
       rotation: 1,
-      name: 'Aquaman',
+      name: 'Timmy',
       savedStates: []
     }, {
       // board: Array(18).fill(Array(10).fill('e')), DOESN'T WORK
@@ -897,7 +897,7 @@ getScores = () => {
   }
 
   render() {
-
+    
     return (
       <div>
         <ScoreBoard 

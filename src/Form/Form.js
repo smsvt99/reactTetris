@@ -24,7 +24,7 @@ const buttonStyle = {
     fontSize: '20px',
     borderRadius: '5px',
     cursor: 'pointer',
-    border: '2px solid black'
+    border: '3px solid black'
 
 }
 
@@ -33,7 +33,7 @@ class Form extends Component {
         if (this.props.gameOver & !this.props.showScores){
         return (
             <div style={style}>
-                <input style={inputStyle} type="text" onChange={(e) => this.props.handleChange(e)} value={this.props.nameValue} />
+                <input style={inputStyle} type="text" maxlength="13" onChange={(e) => this.props.handleChange(e)} value={this.props.nameValue} />
                 <button style={buttonStyle} onClick={this.props.handleClick}>Submit</button>
             </div>
         );

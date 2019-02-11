@@ -36,7 +36,7 @@ app.post('/', upload.array(), function(req, res) {
 
   
   
-MongoClient.connect('mongodb://NAME:PASSWORD@ds331145.mlab.com:31145/tetris', (err, client) => {
+MongoClient.connect('mongodb://SECRET@ds331145.mlab.com:31145/tetris', (err, client) => {
     if (err) return console.log(err);
     db = client.db('tetris')
     app.listen(9000, ()=>{
