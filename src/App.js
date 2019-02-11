@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import Square from './Square/Square';
 import GameOver from './GameOver/GameOver';
+import Form from './Form/Form';
+import ScoreBoard from './ScoreBoard/ScoreBoard';
+
 
 class App extends Component {
   state = {
@@ -32,9 +35,78 @@ class App extends Component {
     gameBegun: false,
     stopped: true,
     gameOver: false,
+    showScores: false,
     score: 0,
     gravitySpeed: 500,
-    rotation: 1
+    rotation: 1,
+    name: '',
+    savedStates: [{
+      // board: Array(18).fill(Array(10).fill('e')), DOESN'T WORK
+      board: [
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'y', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'y', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'y', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'y', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'b', 'b'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'b', 'b'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ],
+      currentPiece: [],
+      currentPieceName: null,
+      currentColor: null,
+      gameBegun: false,
+      stopped: true,
+      gameOver: false,
+      score: 10,
+      gravitySpeed: 500,
+      rotation: 1,
+      name: 'Aquaman',
+      savedStates: []
+    }, {
+      // board: Array(18).fill(Array(10).fill('e')), DOESN'T WORK
+      board: [
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'r', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'r', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'r', 'r', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+      ],
+      currentPiece: [],
+      currentPieceName: null,
+      currentColor: null,
+      gameBegun: false,
+      stopped: true,
+      gameOver: false,
+      score: 0,
+      gravitySpeed: 500,
+      rotation: 1000,
+      name: 'Me first',
+      savedStates: []
+    }]
   }
 
   makeRow = (num) => {
@@ -275,7 +347,11 @@ class App extends Component {
   }
 
   gameOver = () => {
-    this.setState({ gameOver: true })
+    this.setState({ 
+      gameOver: true, 
+      //REMOVE THIS WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+      showScores: true
+    })
     this.stop();
   }
   moveLeft = () => {
@@ -477,7 +553,7 @@ class App extends Component {
           currentPieceCopy[3][0] += 0;
           currentPieceCopy[3][1] += 0;
         })();
-        break;
+          break;
         default: console.log('there was a big problem');
       }
     } else if (this.state.currentPieceName === 'Z') {
@@ -529,7 +605,7 @@ class App extends Component {
           currentPieceCopy[3][0] += 1;
           currentPieceCopy[3][1] += 1;
         })();
-        break;
+          break;
         default: console.log('there was a big problem');
       }
     } else if (this.state.currentPieceName === 'L') {
@@ -581,7 +657,7 @@ class App extends Component {
           currentPieceCopy[3][0] += 0;
           currentPieceCopy[3][1] += 2;
         })();
-        break;
+          break;
         default: console.log('there was a big problem');
       }
     } else if (this.state.currentPieceName === 'J') {
@@ -633,7 +709,7 @@ class App extends Component {
           currentPieceCopy[3][0] += -2;
           currentPieceCopy[3][1] += 0;
         })();
-        break;
+          break;
         default: console.log('there was a big problem');
       }
 
@@ -686,7 +762,7 @@ class App extends Component {
           currentPieceCopy[3][0] += -1;
           currentPieceCopy[3][1] += 1;
         })();
-        break;
+          break;
         default: console.log('there was a big problem');
       }
     }
@@ -723,9 +799,9 @@ class App extends Component {
         wontHitWalls = false
       }
     }
-    
+
     //this is an (inelegant) fix; will fail otherwise.
-    if(!wontHitWalls){
+    if (!wontHitWalls) {
       return false
     }
 
@@ -748,8 +824,8 @@ class App extends Component {
     }
     if (fullRowArray.length > 0) {
       this.setState({
-        score : this.state.score + fullRowArray.length,
-        gravitySpeed : this.state.gravitySpeed - (fullRowArray.length * 3)
+        score: this.state.score + fullRowArray.length,
+        gravitySpeed: this.state.gravitySpeed - (fullRowArray.length * 3)
       })
       this.colorFullRow(fullRowArray)
     }
@@ -757,41 +833,87 @@ class App extends Component {
   colorFullRow = (array) => {
     let boardCopy = this.state.board.map(row => row.slice());
     for (let i = 0; i < array.length; i++) {
-        for (let j = 0; j < 10; j++) {
-            boardCopy[array[i]][j] = 'e'
-        }
-    }
-    this.setState({board: boardCopy})
-    setTimeout(()=>{
-      this.shiftBlocksDown(array);
-    },400)
-}
-shiftBlocksDown = (array) => {
-  let boardCopy = this.state.board.map(row => row.slice());
-  // array is an array of in indices of full rows.
-  //begginning with the row above the lowest full row, shift the values of each row down one. If there are multiple full rows, repeat.
-  for (let i = 0; i < array.length; i++) {
-      for (let j = array[i]; j > -1; j--) {
-          if (j === 0) {
-              boardCopy[j] = ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e']
-          } else {
-              // old: boardCopy[j] = boardCopy[j - 1]
-              for (let k = 0; k < 10; k++){
-                if (!boardCopy[j -1][k].includes('m') && !boardCopy[j][k].includes('m')){
-                  boardCopy[j][k] = boardCopy[j - 1][k]
-                }
-              }
-          }
+      for (let j = 0; j < 10; j++) {
+        boardCopy[array[i]][j] = 'e'
       }
+    }
+    this.setState({ board: boardCopy })
+    setTimeout(() => {
+      this.shiftBlocksDown(array);
+    }, 400)
   }
-  this.setState({board: boardCopy})
+  shiftBlocksDown = (array) => {
+    let boardCopy = this.state.board.map(row => row.slice());
+    // array is an array of in indices of full rows.
+    //begginning with the row above the lowest full row, shift the values of each row down one. If there are multiple full rows, repeat.
+    for (let i = 0; i < array.length; i++) {
+      for (let j = array[i]; j > -1; j--) {
+        if (j === 0) {
+          boardCopy[j] = ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e']
+        } else {
+          // old: boardCopy[j] = boardCopy[j - 1]
+          for (let k = 0; k < 10; k++) {
+            if (!boardCopy[j - 1][k].includes('m') && !boardCopy[j][k].includes('m')) {
+              boardCopy[j][k] = boardCopy[j - 1][k]
+            }
+          }
+        }
+      }
+    }
+    this.setState({ board: boardCopy })
+  }
+  submit = () => {
+    if(this.state.name !== ''){
+    fetch('/', {
+      method: "POST",
+      body: JSON.stringify(this.state),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    }).then(response => {
+      response.json().then(data => {
+        // console.log("Successful" + data);
+      })
+    }).then(()=>{this.getScores()})
+  }
 }
+getScores = () => {
+  // console.log('I was called')
+  fetch('/states', {
+    method: "GET",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+  .then((response) => {return response.json()})
+  .then((json) => {this.setState({savedStates : json})})
+  .then(() => {this.setState({showScores : true})})
+}
+
+  handleChange = (e) => {
+    this.setState({ name: e.target.value })
+  }
 
   render() {
 
     return (
       <div>
-        <GameOver id="gameOver" gameOver={this.state.gameOver} />
+        <ScoreBoard 
+          showScores={this.state.showScores} 
+          savedStates = {this.state.savedStates}/>
+        <GameOver 
+          id="gameOver" 
+          showScores={this.state.showScores} 
+          score={this.state.score} 
+          gameOver={this.state.gameOver} />
+        <Form 
+          gameOver={this.state.gameOver} 
+          showScores={this.state.showScores} 
+          handleClick={this.submit} 
+          nameValue={this.state.name} 
+          handleChange={this.handleChange} />
         <div id="content">
           <div id="innerDiv">
             <h1>TETRIS</h1>
@@ -800,6 +922,7 @@ shiftBlocksDown = (array) => {
             <p>SCORE: {this.state.score} SPEED: {this.state.gravitySpeed} ms</p>
             <button onClick={this.start}>Start</button>
             <button onClick={this.stop}>Stop</button>
+            <button onClick={this.gameOver}>End Game</button>
             <table>
               <tbody>
                 {this.makeRow(0)}
