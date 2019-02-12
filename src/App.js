@@ -4,6 +4,7 @@ import Square from './Square/Square';
 import GameOver from './GameOver/GameOver';
 import Form from './Form/Form';
 import ScoreBoard from './ScoreBoard/ScoreBoard';
+import Display from './Display/Display';
 
 
 class App extends Component {
@@ -40,73 +41,7 @@ class App extends Component {
     gravitySpeed: 500,
     rotation: 1,
     name: '',
-    savedStates: [{
-      // board: Array(18).fill(Array(10).fill('e')), DOESN'T WORK
-      board: [
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'y', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'y', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'y', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'y', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'b', 'b'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'b', 'b'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-      ],
-      currentPiece: [],
-      currentPieceName: null,
-      currentColor: null,
-      gameBegun: false,
-      stopped: true,
-      gameOver: false,
-      score: 10,
-      gravitySpeed: 500,
-      rotation: 1,
-      name: 'Timmy',
-      savedStates: []
-    }, {
-      // board: Array(18).fill(Array(10).fill('e')), DOESN'T WORK
-      board: [
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'r', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'r', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'r', 'r', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
-      ],
-      currentPiece: [],
-      currentPieceName: null,
-      currentColor: null,
-      gameBegun: false,
-      stopped: true,
-      gameOver: false,
-      score: 0,
-      gravitySpeed: 500,
-      rotation: 1000,
-      name: 'Me first',
-      savedStates: []
-    }]
+    savedStates : []
   }
 
   makeRow = (num) => {
@@ -349,8 +284,6 @@ class App extends Component {
   gameOver = () => {
     this.setState({ 
       gameOver: true, 
-      //REMOVE THIS WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-      showScores: true
     })
     this.stop();
   }
@@ -914,39 +847,12 @@ getScores = () => {
           handleClick={this.submit} 
           nameValue={this.state.name} 
           handleChange={this.handleChange} />
-        <div id="content">
-          <div id="innerDiv">
-            <h1>TETRIS</h1>
-
-            <p>Control pieces with W, A, S and D.</p>
-            <p>SCORE: {this.state.score} SPEED: {this.state.gravitySpeed} ms</p>
-            <button onClick={this.start}>Start</button>
-            <button onClick={this.stop}>Stop</button>
-            <button onClick={this.gameOver}>End Game</button>
-            <table>
-              <tbody>
-                {this.makeRow(0)}
-                {this.makeRow(1)}
-                {this.makeRow(2)}
-                {this.makeRow(3)}
-                {this.makeRow(4)}
-                {this.makeRow(5)}
-                {this.makeRow(6)}
-                {this.makeRow(7)}
-                {this.makeRow(8)}
-                {this.makeRow(9)}
-                {this.makeRow(10)}
-                {this.makeRow(11)}
-                {this.makeRow(12)}
-                {this.makeRow(13)}
-                {this.makeRow(14)}
-                {this.makeRow(15)}
-                {this.makeRow(16)}
-                {this.makeRow(17)}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <Display
+          state={this.state}
+          makeRow={this.makeRow}
+          stop={this.stop}
+          start={this.start}
+          />
       </div>
     )
   }

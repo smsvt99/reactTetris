@@ -55,6 +55,11 @@ const titleStyle = {
     marginTop: '50px',
     marginBottom: '20px'
 }
+const linkStyle = {
+    textAlign: 'center',
+    marginBottom: '50px',
+    fontSize: '22px'
+}
 
 const ScoreBoard = (props) => {
     function makeRow(num, i) {
@@ -117,17 +122,18 @@ const ScoreBoard = (props) => {
         <div style={boardStyle}>
             {makeCard(0, '1st', '👑 ')}
             {makeCard(1, '2nd', '')}
-            {makeCard(0, '3rd', '')}
-            {makeCard(1, '4th', '')}
-            {makeCard(0, '5th', '')}
-            {makeCard(1, '6th', '')}
-            {makeCard(0, '7th', '')}
-            {makeCard(1, '8th', '')}
-            {makeCard(1, '9th', '')}
-            {makeCard(1, '10th', '')}
-            {makeCard(1, '11th', '')}
-            {makeCard(1, '12th', '')}
+            {makeCard(2, '3rd', '')}
+            {makeCard(3, '4th', '')}
+            {makeCard(4, '5th', '')}
+            {makeCard(5, '6th', '')}
+            {makeCard(6, '7th', '')}
+            {makeCard(7, '8th', '')}
+            {makeCard(8, '9th', '')}
+            {makeCard(9, '10th', '')}
+            {makeCard(10, '11th', '')}
+            {makeCard(11, '12th', '')}
         </div>
+        <a href='./'><p style={linkStyle}>Play Again?</p></a>
         </div>
     )} else {
         return null;
