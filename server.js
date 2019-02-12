@@ -40,7 +40,7 @@ app.post('/', upload.array(), function(req, res) {
 
   
   
-MongoClient.connect('process.env.MONGODB_URI', { useNewUrlParser: true }, (err, client) => {
+MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, client) => {
     if (err) return console.log(err);
     db = client.db('tetris')
     app.listen(PORT, ()=>{
