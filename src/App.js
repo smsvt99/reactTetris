@@ -800,10 +800,10 @@ class App extends Component {
     fetch('/', {
       method: "POST",
       body: JSON.stringify(this.state),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
+      // headers: {
+      //   'Accept': 'application/json',
+      //   'Content-Type': 'application/json'
+      // },
     }).then(response => {
       response.json().then(data => {
         // console.log("Successful" + data);
@@ -815,10 +815,10 @@ getScores = () => {
   // console.log('I was called')
   fetch('/states', {
     method: "GET",
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
+    // headers: {
+    //   'Accept': 'application/json',
+    //   'Content-Type': 'application/json'
+    // }
   })
   .then((response) => {return response.json()})
   .then((json) => {this.setState({savedStates : json})})
