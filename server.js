@@ -17,7 +17,7 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
 
-app.get('/states', function(req, res) {
+app.get('/states/', function(req, res) {
     res.set('Access-Control-Allow-Origin', '*')
     console.log('get Req at states');
     db.collection('states').find().toArray(function(err, result) {
