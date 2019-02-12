@@ -5,6 +5,7 @@ const app = express();
 const multer = require('multer')
 const MongoClient = require('mongodb').MongoClient
 const PORT = process.env.PORT || 9000
+const db_uri = process.env.MONGODB_URI
 
 let upload = multer();
 
@@ -40,7 +41,7 @@ app.post('/', upload.array(), function(req, res) {
 
   
   
-MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, client) => {
+MongoClient.connect(db_uri, { useNewUrlParser: true }, (err, client) => {
     if (err) return console.log(err);
     db = client.db('tetris')
     app.listen(PORT, ()=>{
