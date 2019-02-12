@@ -800,15 +800,16 @@ class App extends Component {
     fetch('/', {
       method: "POST",
       body: JSON.stringify(this.state),
-      // headers: {
-      //   'Accept': 'application/json',
-      //   'Content-Type': 'application/json'
-      // },
-    }).then(response => {
+      headers: {
+        // 'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(response => {
       response.json().then(data => {
-        // console.log("Successful" + data);
       })
-    }).then(()=>{this.getScores()})
+    })
+    .then(()=>{this.getScores()})
   }
 }
 getScores = () => {

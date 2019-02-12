@@ -9,6 +9,7 @@ const db_uri = process.env.MONGODB_URI
 
 let upload = multer();
 
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(bodyParser.json());
@@ -18,10 +19,10 @@ app.get('/', function(req, res) {
   });
 
 app.get('/states', function(req, res) {
-    res.set('Access-Control-Allow-Origin', '*')
+    // res.set('Access-Control-Allow-Origin', '*')
     console.log('get Req at states');
     db.collection('states').find().toArray(function(err, result) {
-    console.log(result);
+    // console.log(result);
     // res.sendFile(path.join(__dirname, 'build', 'index.html'));
     result.sort(function(a, b){
         return b.score - a.score;
@@ -46,5 +47,6 @@ MongoClient.connect(db_uri, { useNewUrlParser: true }, (err, client) => {
     db = client.db('tetris')
     app.listen(PORT, ()=>{
         console.log('listening...');
+        console.log(process.env.MONGODB_URI)
     });
 });
