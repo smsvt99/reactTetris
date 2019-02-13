@@ -41,7 +41,9 @@ class App extends Component {
     gravitySpeed: 500,
     rotation: 1,
     name: '',
-    savedStates : []
+    savedStates : [],
+    previousBoards: [],
+    timeWarpIndex: 0
   }
 
   makeRow = (num) => {
@@ -151,6 +153,7 @@ class App extends Component {
       boardCopy[currentPiece[i][0]][currentPiece[i][1]] = currentColor + 'm'
     }
     this.setState({
+      previousBoards : this.trackBoard(boardCopy),
       board: boardCopy,
       currentPiece: currentPiece,
       currentColor: currentColor
@@ -191,6 +194,7 @@ class App extends Component {
       }
       //merge these changes into state
       this.setState({
+        previousBoards : this.trackBoard(boardCopy),
         board: boardCopy,
         currentPiece: currentPieceCopy
       })
@@ -265,6 +269,7 @@ class App extends Component {
       }
     }
     this.setState({
+      previousBoards : this.trackBoard(boardCopy),
       board: boardCopy
     })
   }
@@ -313,6 +318,7 @@ class App extends Component {
         currentPieceCopy[i][1] = currentPieceCopy[i][1] - 1
       }
       this.setState({
+        previousBoards : this.trackBoard(boardCopy),
         board: boardCopy,
         currentPiece: currentPieceCopy
       })
@@ -343,6 +349,7 @@ class App extends Component {
       }
     }
     this.setState({
+      previousBoards : this.trackBoard(boardCopy),
       board: boardCopy,
       currentPiece: currentPieceCopy
     })
@@ -373,6 +380,7 @@ class App extends Component {
       }
     }
     this.setState({
+      previousBoards : this.trackBoard(boardCopy),
       board: boardCopy,
       currentPiece: currentPieceCopy
     })
@@ -709,6 +717,7 @@ class App extends Component {
         boardCopy[currentPieceCopy[i][0]][currentPieceCopy[i][1]] = this.state.currentColor + 'm'
       }
       this.setState({
+        previousBoards : this.trackBoard(boardCopy),
         board: boardCopy,
         currentPiece: currentPieceCopy,
         rotation: rotationCopy
@@ -770,7 +779,10 @@ class App extends Component {
         boardCopy[array[i]][j] = 'e'
       }
     }
-    this.setState({ board: boardCopy })
+    this.setState({ 
+      previousBoards : this.trackBoard(boardCopy),
+      board: boardCopy 
+    })
     setTimeout(() => {
       this.shiftBlocksDown(array);
     }, 400)
@@ -793,8 +805,56 @@ class App extends Component {
         }
       }
     }
-    this.setState({ board: boardCopy })
+    this.setState({
+      previousBoards : this.trackBoard(boardCopy), 
+      board: boardCopy 
+    })
   }
+  submitCheck = ()=>{
+    fetch('/states', {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((response) => {return response.json()})
+    .then((json) => {this.setState({savedStates : json})})
+    .then(() => {
+        if (this.isHighestScore()){
+          this.submit();
+        } else if (this.isHighScore()){
+          this.trimAndSubmit();
+        } else {
+          this.scoreState();
+      }
+    })
+  }
+    isHighestScore = () =>{
+      if (this.state.score >= this.state.savedStates[0].score){
+        return true;
+      } else {
+        return false;
+      }
+    }
+    isHighScore = () =>{
+      let highScore = false;
+      for (let i = 0; i < 5; i++){
+        if (this.state.score >= this.state.savedStates[i].score){
+          highScore = true;
+        }
+      }
+      return highScore;
+    }
+    trimAndSubmit = () => {
+      this.setState({
+        previousBoards : 'deleted'
+      }, ()=>{
+        this.submit();
+        this.scoreState();
+      })
+    }
+
   submit = () => {
     if(this.state.name !== ''){
     fetch('/', {
@@ -809,25 +869,57 @@ class App extends Component {
       response.json().then(data => {
       })
     })
-    .then(()=>{this.getScores()})
+    .then(()=>{
+      this.getScores();
+      this.scoreState();
+    })
   }
 }
+scoreState = () =>{
+  this.setState({
+    showScores : true
+  })
+}
 getScores = () => {
-  // console.log('I was called')
   fetch('/states', {
     method: "GET",
-    // headers: {
-    //   'Accept': 'application/json',
-    //   'Content-Type': 'application/json'
-    // }
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
   })
   .then((response) => {return response.json()})
   .then((json) => {this.setState({savedStates : json})})
-  .then(() => {this.setState({showScores : true})})
+  
+  // console.log('843 STATE: ' + this.state)
+  this.controlTimeWarp('start')
 }
 
   handleChange = (e) => {
     this.setState({ name: e.target.value })
+  }
+
+  trackBoard = (boardCopy) => {
+    let previousBoardsCopy = this.state.previousBoards.map(row => row.slice())
+    previousBoardsCopy.push(boardCopy)
+    return previousBoardsCopy
+  }
+  moveTimeWarpIndex = () => {
+      let plusOne = this.state.timeWarpIndex + 1
+      if (plusOne === this.state.previousBoards.length){
+        this.setState({timeWarpIndex : 0})
+      } else {
+      this.setState({timeWarpIndex: plusOne})
+      }
+  }
+  controlTimeWarp = (command) => {
+    // console.log('867 STATE: ' + this.state)
+    let interval;
+    if(command === 'start'){
+      interval = setInterval(this.moveTimeWarpIndex, 250)
+    } else if (command === 'stop') {
+      clearInterval(interval);
+    }
   }
 
   render() {
@@ -836,7 +928,10 @@ getScores = () => {
       <div>
         <ScoreBoard 
           showScores={this.state.showScores} 
-          savedStates = {this.state.savedStates}/>
+          savedStates = {this.state.savedStates}
+          index = {this.state.timeWarpIndex}
+          // previousBoards = {this.state.previousBoards}
+          />
         <GameOver 
           id="gameOver" 
           showScores={this.state.showScores} 
@@ -845,7 +940,7 @@ getScores = () => {
         <Form 
           gameOver={this.state.gameOver} 
           showScores={this.state.showScores} 
-          handleClick={this.submit} 
+          handleClick={this.submitCheck} 
           nameValue={this.state.name} 
           handleChange={this.handleChange} />
         <Display
@@ -853,6 +948,7 @@ getScores = () => {
           makeRow={this.makeRow}
           stop={this.stop}
           start={this.start}
+          endGame={this.submitCheck}
           />
       </div>
     )

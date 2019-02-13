@@ -16,7 +16,7 @@ const Square = (props) => {
 		}
   }
   function getSize(key){
-    if (key === 'small'){
+    if (key === 'small'){ 
       return '8px'
     } else {
       return '22px'

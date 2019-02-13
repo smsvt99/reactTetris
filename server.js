@@ -12,7 +12,7 @@ let upload = multer();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'build')));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
@@ -43,10 +43,9 @@ app.post('/', upload.array(), function(req, res) {
   
   
 MongoClient.connect(db_uri, { useNewUrlParser: true }, (err, client) => {
-    if (err) return console.log(err);
+    if (err) return console.log(err, db_uri);
     db = client.db('tetris')
     app.listen(PORT, ()=>{
         console.log('listening...');
-        console.log(process.env.MONGODB_URI)
     });
 });

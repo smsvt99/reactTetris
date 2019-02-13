@@ -78,68 +78,123 @@ const ScoreBoard = (props) => {
             </tr>
         )
     }
-    function makeCard(i, rank, crown){
-            return (
-                <div style={columnStyle}>
-                    <h1 style={nameStyle}>{crown + props.savedStates[i].name}</h1>
-                    <div style={containerStyle}>
-                        <h1 style={rankStyle}>{rank}</h1>
-                        <table style={tableStyle}>
-                            <tbody>
-                                {makeRow(0, i)}
-                                {makeRow(1, i)}
-                                {makeRow(2, i)}
-                                {makeRow(3, i)}
-                                {makeRow(4, i)}
-                                {makeRow(5, i)}
-                                {makeRow(6, i)}
-                                {makeRow(7, i)}
-                                {makeRow(8, i)}
-                                {makeRow(9, i)}
-                                {makeRow(10, i)}
-                                {makeRow(11, i)}
-                                {makeRow(12, i)}
-                                {makeRow(13, i)}
-                                {makeRow(14, i)}
-                                {makeRow(15, i)}
-                                {makeRow(16, i)}
-                                {makeRow(17, i)}
-                            </tbody>
-                        </table>
-                    </div>
-                    <h1 style={scoreStyle}>{props.savedStates[i].score} points</h1>
+    function makeTimeWarpRow(num) {
+        let i = props.index - 1
+        // console.log(0, i)
+        // console.log(1, props)
+        // console.log(2, props.previousBoards)
+        // console.log(3, props.previousBoards[i])
+        // console.log(4, props.previousBoards[i][0])
+        // console.log(5, props.previousBoards[i][0][0])
+        return (
+            <tr>
+                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][0]} />
+                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][1]} />
+                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][2]} />
+                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][3]} />
+                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][4]} />
+                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][5]} />
+                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][6]} />
+                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][7]} />
+                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][8]} />
+                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][9]} />
+            </tr>
+        )
+
+    }
+    function makeCard(i, rank, crown) {
+        return (
+            <div style={columnStyle}>
+                <h1 style={nameStyle}>{crown + props.savedStates[i].name}</h1>
+                <div style={containerStyle}>
+                    <h1 style={rankStyle}>{rank}</h1>
+                    <table style={tableStyle}>
+                        <tbody>
+                            {makeRow(0, i)}
+                            {makeRow(1, i)}
+                            {makeRow(2, i)}
+                            {makeRow(3, i)}
+                            {makeRow(4, i)}
+                            {makeRow(5, i)}
+                            {makeRow(6, i)}
+                            {makeRow(7, i)}
+                            {makeRow(8, i)}
+                            {makeRow(9, i)}
+                            {makeRow(10, i)}
+                            {makeRow(11, i)}
+                            {makeRow(12, i)}
+                            {makeRow(13, i)}
+                            {makeRow(14, i)}
+                            {makeRow(15, i)}
+                            {makeRow(16, i)}
+                            {makeRow(17, i)}
+                        </tbody>
+                    </table>
                 </div>
-    
-            )
- 
+                <h1 style={scoreStyle}>{props.savedStates[i].score} points</h1>
+            </div>
+
+        )
+
+    }
+    function makeTimeWarp(i) {
+        return (
+            <table>
+                <tbody>
+                    {makeTimeWarpRow(0)}
+                    {makeTimeWarpRow(1)}
+                    {makeTimeWarpRow(2)}
+                    {makeTimeWarpRow(3)}
+                    {makeTimeWarpRow(4)}
+                    {makeTimeWarpRow(5)}
+                    {makeTimeWarpRow(6)}
+                    {makeTimeWarpRow(7)}
+                    {makeTimeWarpRow(8)}
+                    {makeTimeWarpRow(9)}
+                    {makeTimeWarpRow(10)}
+                    {makeTimeWarpRow(11)}
+                    {makeTimeWarpRow(12)}
+                    {makeTimeWarpRow(13)}
+                    {makeTimeWarpRow(14)}
+                    {makeTimeWarpRow(15)}
+                    {makeTimeWarpRow(16)}
+                    {makeTimeWarpRow(17)}
+                </tbody>
+            </table>
+        )
     }
     if (props.showScores) {
 
-    return (
-        <div>
-        <h1 style={titleStyle}>React TETRIS High Scores</h1>
+        return (
+            <div>
+                <h1 style={titleStyle}>React TETRIS High Scores</h1>
 
-        <div style={boardStyle}>
-            {makeCard(0, '1st', '👑 ')}
-            {makeCard(1, '2nd', '')}
-            {makeCard(2, '3rd', '')}
-            {makeCard(3, '4th', '')}
-            {makeCard(4, '5th', '')}
-            {makeCard(5, '6th', '')}
-            {makeCard(6, '7th', '')}
-            {makeCard(7, '8th', '')}
-            {makeCard(8, '9th', '')}
-            {makeCard(9, '10th', '')}
-            {makeCard(10, '11th', '')}
-            {makeCard(11, '12th', '')}
-        </div>
-        <a href='./'><p style={linkStyle}>Play Again?</p></a>
-        </div>
-    )} else {
+                <div style={boardStyle}>
+                    {/* {makeCard(0, '1st', '👑 ')} */}
+                    {makeTimeWarp()}
+
+                    {makeCard(1, '2nd', '')}
+                    {makeCard(2, '3rd', '')}
+                    {makeCard(3, '4th', '')}
+                    {makeCard(4, '5th', '')}
+                    {/* {makeCard(5, '6th', '')}
+                    {makeCard(6, '7th', '')}
+                    {makeCard(7, '8th', '')}
+                    {makeCard(8, '9th', '')}
+                    {makeCard(9, '10th', '')}
+                    {makeCard(10, '11th', '')}
+                    {makeCard(11, '12th', '')} */}
+                </div>
+                <a href='./'><p style={linkStyle}>Play Again?</p></a>
+                
+                {/* {makeTimeWarp()} */}
+            </div>
+        )
+    } else {
         return null;
     }
 }
-    
+
 
 
 export default ScoreBoard;

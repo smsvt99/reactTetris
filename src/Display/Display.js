@@ -7,12 +7,14 @@ const Display = (props) => {
         return (
             <div id="content">
             <div id="innerDiv">
-              <h1>TETRIS</h1>
+              <h1>TETRIS</h1> 
   
               <p>Control pieces with W, A, S and D.</p>
               <p>SCORE: {props.state.score} SPEED: {props.state.gravitySpeed} ms</p>
               <button onClick={props.start}>Start</button>
               <button onClick={props.stop}>Stop</button>
+              <button onClick={props.endGame}>Scores</button>
+
               <table>
                 <tbody>
                   {props.makeRow(0)}
