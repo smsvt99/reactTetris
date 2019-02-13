@@ -10,7 +10,7 @@ const Display = (props) => {
               <h1>TETRIS</h1> 
   
               <p>Control pieces with W, A, S and D.</p>
-              <p>SCORE: {props.state.score} SPEED: {props.state.gravitySpeed} ms</p>
+              <p>SCORE: <b>{props.state.score}</b> SPEED: 1 tick per <b>{props.state.gravitySpeed}</b> ms</p>
               <button onClick={props.start}>Start</button>
               <button onClick={props.stop}>Stop</button>
               <button onClick={props.endGame}>Scores</button>

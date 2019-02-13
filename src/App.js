@@ -38,7 +38,7 @@ class App extends Component {
     gameOver: false,
     showScores: false,
     score: 0,
-    gravitySpeed: 500,
+    gravitySpeed: 400,
     rotation: 1,
     name: '',
     savedStates : [],
@@ -766,8 +766,8 @@ class App extends Component {
     }
     if (fullRowArray.length > 0) {
       this.setState({
-        score: this.state.score + fullRowArray.length,
-        gravitySpeed: this.state.gravitySpeed - (fullRowArray.length * 3)
+        score: this.state.score + (fullRowArray.length * fullRowArray.length),
+        gravitySpeed: this.state.gravitySpeed - (fullRowArray.length * 10)
       })
       this.colorFullRow(fullRowArray)
     }
@@ -827,6 +827,7 @@ class App extends Component {
           this.trimAndSubmit();
         } else {
           this.scoreState();
+          this.controlTimeWarp('start');
       }
     })
   }
@@ -851,7 +852,7 @@ class App extends Component {
         previousBoards : 'deleted'
       }, ()=>{
         this.submit();
-        this.scoreState();
+        // this.scoreState();
       })
     }
 
@@ -865,13 +866,10 @@ class App extends Component {
         'Content-Type': 'application/json'
       },
     })
-    .then(response => {
-      response.json().then(data => {
-      })
-    })
+    // .then(response => {
+    //   response.json()
     .then(()=>{
       this.getScores();
-      this.scoreState();
     })
   }
 }
@@ -889,10 +887,12 @@ getScores = () => {
     }
   })
   .then((response) => {return response.json()})
-  .then((json) => {this.setState({savedStates : json})})
-  
-  // console.log('843 STATE: ' + this.state)
-  this.controlTimeWarp('start')
+  .then((json) => {this.setState({savedStates : json},
+    ()=>{
+      this.controlTimeWarp('start')
+      this.scoreState()
+    }
+    )})
 }
 
   handleChange = (e) => {
@@ -905,18 +905,17 @@ getScores = () => {
     return previousBoardsCopy
   }
   moveTimeWarpIndex = () => {
-      let plusOne = this.state.timeWarpIndex + 1
-      if (plusOne === this.state.previousBoards.length){
-        this.setState({timeWarpIndex : 0})
+      let plusOne = this.state.timeWarpIndex + 1;
+      if (plusOne === this.state.savedStates[0].previousBoards.length){
+        this.setState({timeWarpIndex : 1})
       } else {
       this.setState({timeWarpIndex: plusOne})
       }
   }
   controlTimeWarp = (command) => {
-    // console.log('867 STATE: ' + this.state)
     let interval;
     if(command === 'start'){
-      interval = setInterval(this.moveTimeWarpIndex, 250)
+      interval = setInterval(this.moveTimeWarpIndex, 140)
     } else if (command === 'stop') {
       clearInterval(interval);
     }

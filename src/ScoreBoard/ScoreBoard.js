@@ -8,6 +8,13 @@ const rankStyle = {
     marginLeft: '25px',
     textAlign: 'center'
 }
+const kingRank  = {
+    display: 'inline',
+    fontSize: '85px',
+    marginRight: '30px',
+    marginLeft: '50px',
+    textAlign: 'center'
+}
 const nameStyle = {
     display: 'inline',
     fontSize: '35px',
@@ -29,6 +36,7 @@ const containerStyle = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+    alignItems: 'center',
 }
 const columnStyle = {
     border: '3px solid black',
@@ -60,6 +68,37 @@ const linkStyle = {
     marginBottom: '50px',
     fontSize: '22px'
 }
+const kingColumnStyle = {
+    border: '3px solid black',
+    borderRadius: '20px',
+    margin: 'auto',
+    padding: '5px',
+    backgroundColor: 'white',
+    width: '40%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignContent: 'center',
+    alignItems: 'center',
+}
+
+const row = {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+}
+const imgLeft = {
+    height: '350px',
+    marginLeft:'100px',
+    marginTop: '150px'
+}
+const imgRight = {
+    height: '350px',
+    marginRight:'100px',
+    marginTop: '150px'
+
+}
+
 
 const ScoreBoard = (props) => {
     function makeRow(num, i) {
@@ -79,7 +118,7 @@ const ScoreBoard = (props) => {
         )
     }
     function makeTimeWarpRow(num) {
-        let i = props.index - 1
+        let i = props.index
         // console.log(0, i)
         // console.log(1, props)
         // console.log(2, props.previousBoards)
@@ -88,16 +127,16 @@ const ScoreBoard = (props) => {
         // console.log(5, props.previousBoards[i][0][0])
         return (
             <tr>
-                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][0]} />
-                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][1]} />
-                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][2]} />
-                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][3]} />
-                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][4]} />
-                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][5]} />
-                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][6]} />
-                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][7]} />
-                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][8]} />
-                <Square sizeKey='small' colorKey={props.savedStates[0].previousBoards[i][num][9]} />
+                <Square colorKey={props.savedStates[0].previousBoards[i][num][0]} />
+                <Square colorKey={props.savedStates[0].previousBoards[i][num][1]} />
+                <Square colorKey={props.savedStates[0].previousBoards[i][num][2]} />
+                <Square colorKey={props.savedStates[0].previousBoards[i][num][3]} />
+                <Square colorKey={props.savedStates[0].previousBoards[i][num][4]} />
+                <Square colorKey={props.savedStates[0].previousBoards[i][num][5]} />
+                <Square colorKey={props.savedStates[0].previousBoards[i][num][6]} />
+                <Square colorKey={props.savedStates[0].previousBoards[i][num][7]} />
+                <Square colorKey={props.savedStates[0].previousBoards[i][num][8]} />
+                <Square colorKey={props.savedStates[0].previousBoards[i][num][9]} />
             </tr>
         )
 
@@ -137,10 +176,16 @@ const ScoreBoard = (props) => {
         )
 
     }
-    function makeTimeWarp(i) {
+    function makeTimeWarp() {
         return (
-            <table>
-                <tbody>
+            <div style={row}>
+            <img style={imgLeft} src="../../laurelLeft.png"></img>
+            <div style={kingColumnStyle}>
+            <h1 style={nameStyle}>{'👑 ' + props.savedStates[0].name}</h1>
+            <div style={containerStyle}>
+                <h1 style={kingRank}>1st</h1>
+                <table style={tableStyle}>
+                    <tbody>
                     {makeTimeWarpRow(0)}
                     {makeTimeWarpRow(1)}
                     {makeTimeWarpRow(2)}
@@ -159,8 +204,15 @@ const ScoreBoard = (props) => {
                     {makeTimeWarpRow(15)}
                     {makeTimeWarpRow(16)}
                     {makeTimeWarpRow(17)}
-                </tbody>
-            </table>
+                    </tbody>
+                    </table>
+                </div>
+                <h1 style={scoreStyle}>{props.savedStates[0].score} points</h1>
+            </div>
+            <img style={imgRight} src="../../laurelRight.png"></img>
+
+
+            </div>
         )
     }
     if (props.showScores) {
@@ -168,26 +220,14 @@ const ScoreBoard = (props) => {
         return (
             <div>
                 <h1 style={titleStyle}>React TETRIS High Scores</h1>
-
+                {makeTimeWarp()}
                 <div style={boardStyle}>
-                    {/* {makeCard(0, '1st', '👑 ')} */}
-                    {makeTimeWarp()}
-
                     {makeCard(1, '2nd', '')}
                     {makeCard(2, '3rd', '')}
                     {makeCard(3, '4th', '')}
                     {makeCard(4, '5th', '')}
-                    {/* {makeCard(5, '6th', '')}
-                    {makeCard(6, '7th', '')}
-                    {makeCard(7, '8th', '')}
-                    {makeCard(8, '9th', '')}
-                    {makeCard(9, '10th', '')}
-                    {makeCard(10, '11th', '')}
-                    {makeCard(11, '12th', '')} */}
                 </div>
-                <a href='./'><p style={linkStyle}>Play Again?</p></a>
-                
-                {/* {makeTimeWarp()} */}
+                <a href='./'><p style={linkStyle}>Play Again?</p></a>                
             </div>
         )
     } else {

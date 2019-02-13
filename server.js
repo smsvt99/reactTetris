@@ -40,6 +40,18 @@ app.post('/', upload.array(), function(req, res) {
       })
   });
 
+  // app.get('/update', function(req, res) {
+  //   try {
+  //   db.collection('states').updateOne(
+  //     {"name" : "???"},
+  //    { $set : {"name" : "Rex" } }
+  //   );
+  //   } catch (e) {
+  //       console.log(e)
+  //   } 
+  //   res.send('thank you')
+  // })
+
   
   
 MongoClient.connect(db_uri, { useNewUrlParser: true }, (err, client) => {
