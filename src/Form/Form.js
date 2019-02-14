@@ -20,21 +20,31 @@ const inputStyle = {
 const buttonStyle = {
     height: '50px',
     width: '250px',
-    marginTop: '10px',
+    // marginTop: '10px',
     fontSize: '20px',
     borderRadius: '5px',
     cursor: 'pointer',
-    border: '3px solid black'
+    border: '3px solid black' 
 
 }
 
+
 class Form extends Component {
+    state = {
+        message : "Submit"
+    }
+
+    clickHandle = (props) => {
+        props.handleClick();
+        this.setState({message: "Loading...."})
+    }
+
     render = (props) => {
         if (this.props.gameOver & !this.props.showScores){
         return (
             <div style={style}>
                 <input style={inputStyle} type="text" maxLength="13" onChange={(e) => this.props.handleChange(e)} value={this.props.nameValue} />
-                <button style={buttonStyle} onClick={this.props.handleClick}>Submit</button>
+                <button style={buttonStyle} onClick={()=>{this.clickHandle(this.props)}}>{this.state.message}</button>
             </div>
         );
         } else {

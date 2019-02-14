@@ -2,8 +2,8 @@ import React from 'react';
 
 const style = {
     color: 'white',
-    opacity: '1'
-  }
+    opacity: '1' 
+  } 
   const divStyle = {
     marginBlockStart: '10px',
     marginBlockEnd: '10px',
@@ -11,7 +11,7 @@ const style = {
     color: 'white',
     fontSize: '50px',
     width:'90%',
-    height:'110%',
+    height:'120%',
     textAlign: 'center',
     // margin: 'auto',
     position: 'absolute',

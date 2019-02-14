@@ -765,9 +765,15 @@ class App extends Component {
       }
     }
     if (fullRowArray.length > 0) {
+      let newSpeed;
+      if (this.state.gravitySpeed < 60){
+        newSpeed = 60;
+      } else {
+        newSpeed = this.state.gravitySpeed - (fullRowArray.length * 10)
+      }
       this.setState({
         score: this.state.score + (fullRowArray.length * fullRowArray.length),
-        gravitySpeed: this.state.gravitySpeed - (fullRowArray.length * 10)
+        gravitySpeed: newSpeed
       })
       this.colorFullRow(fullRowArray)
     }
@@ -822,7 +828,7 @@ class App extends Component {
     .then((json) => {this.setState({savedStates : json})})
     .then(() => {
         if (this.isHighestScore()){
-          this.submit();
+          this.trimTo1000AndSubmit()
         } else if (this.isHighScore()){
           this.trimAndSubmit();
         } else {
@@ -855,12 +861,28 @@ class App extends Component {
         // this.scoreState();
       })
     }
+    trimTo1000AndSubmit = () => {
+      let thousandIndices = [];
+      for (let i = 0; i < 800; i++){
+        thousandIndices.push(this.state.previousBoards[i])
+      }
+      this.setState({
+        previousBoards: thousandIndices
+      }, () => {
+       this.submit();
+    })
+    }
 
   submit = () => {
     if(this.state.name !== ''){
     fetch('/', {
       method: "POST",
-      body: JSON.stringify(this.state),
+      body: JSON.stringify({
+        name : this.state.name,
+        score : this.state.score,
+        board: this.state.board,
+        previousBoards : this.state.previousBoards
+      }),
       headers: {
         // 'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -925,6 +947,10 @@ getScores = () => {
     
     return (
       <div>
+        {/* <Loader
+          showScores={this.state.showScores} 
+          gameOver={this.state.gameOver}
+        /> */}
         <ScoreBoard 
           showScores={this.state.showScores} 
           savedStates = {this.state.savedStates}

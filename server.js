@@ -12,52 +12,57 @@ let upload = multer();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'build')));
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({ limit: '50mb' }));
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-  });
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
-app.get('/states', function(req, res) {
-    // res.set('Access-Control-Allow-Origin', '*')
-    console.log('get Req at states');
-    db.collection('states').find().toArray(function(err, result) {
+app.get('/states', function (req, res) {
+  // res.set('Access-Control-Allow-Origin', '*')
+  console.log('get Req at states');
+  db.collection('states').find().toArray(function (err, result) {
     // console.log(result);
     // res.sendFile(path.join(__dirname, 'build', 'index.html'));
-    result.sort(function(a, b){
-        return b.score - a.score;
+    result.sort(function (a, b) {
+      return b.score - a.score;
     })
     // send HTML file populated with quotes here
     res.send(result)
   })
 });
 
-app.post('/', upload.array(), function(req, res) {
-    db.collection('states').insertOne(req.body, (err, result) => {
-        if (err) return console.log(err)
-        console.log('saved to database')
-        res.redirect('/')
-      })
-  });
+app.post('/', upload.array(), function (req, res) {
+  db.collection('states').insertOne(req.body, (err, result) => {
+    if (err) return console.log(err)
+    console.log('saved to database')
+    res.redirect('/')
+  })
+});
 
-  // app.get('/update', function(req, res) {
-  //   try {
-  //   db.collection('states').updateOne(
-  //     {"name" : "???"},
-  //    { $set : {"name" : "Rex" } }
-  //   );
-  //   } catch (e) {
-  //       console.log(e)
-  //   } 
-  //   res.send('thank you')
-  // })
+// app.get('/update', function (req, res) {
+//   try {
+//     db.collection('states').updateOne(
+//       //WHERE
+//       { "name": "Il Duce" },
+//       {
+//         $set: {
+//           "name": "Duce",
+//           "previousBoards": "Deleted"
+//         }
+//       });
+//   } catch (e) {
+//     console.log(e)
+//   }
+//   res.send('thank you')
+// })
 
-  
-  
+
+
 MongoClient.connect(db_uri, { useNewUrlParser: true }, (err, client) => {
-    if (err) return console.log(err, db_uri);
-    db = client.db('tetris')
-    app.listen(PORT, ()=>{
-        console.log('listening...');
-    });
+  if (err) return console.log(err, db_uri);
+  db = client.db('tetris')
+  app.listen(PORT, () => {
+    console.log('listening...');
+  });
 });
